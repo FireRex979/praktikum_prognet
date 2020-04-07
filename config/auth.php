@@ -44,16 +44,15 @@ return [
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
-            'hash' => false,
-        ],
-
-        'user' => [
-            'driver' => 'session',
-            'provider' => 'users',
         ],
 
         'admin' => [
             'driver' => 'session',
+            'provider' => 'admins',
+        ],
+
+        'admin-api' => [
+            'driver' => 'token',
             'provider' => 'admins',
         ],
     ],
@@ -76,11 +75,6 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
-        ],
-
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
@@ -114,8 +108,14 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-    ],
 
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout

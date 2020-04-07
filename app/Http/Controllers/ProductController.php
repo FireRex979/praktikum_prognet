@@ -14,7 +14,7 @@ class ProductController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('logout');
+        $this->middleware(['auth:admin']);
     }
 
 	public function index(Request $request){
@@ -160,16 +160,6 @@ class ProductController extends Controller
         }
 
         Product_image::insert($files);
-         /*$where = array('products.id' => $id);
-        $products['products'] = DB::table('products')
-            ->join('product_category_details', 'products.id','=','product_category_details.product_id')
-            ->join('categories', 'categories.id','=','product_category_details.category_id')
-            ->select('products.*','categories.category_name')
-            ->where($where)->first();
-        $image = DB::table('products')
-            ->join('product_images', 'products.id', '=', 'product_images.product_id')
-            ->select('product_images.*')
-            ->where($where)->get();*/
         return Redirect::to('products');
     }
 

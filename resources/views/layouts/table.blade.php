@@ -134,17 +134,20 @@
           </li>
           <li class="nav-item nav-profile dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-              <span class="nav-profile-name">Profile</span>
+              <span class="nav-profile-name">{{ Auth::user()->name }}</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
               <a class="dropdown-item">
                 <i class="mdi mdi-settings text-primary"></i>
                 Settings
               </a>
-              <a class="dropdown-item" href="/adminLogout">
-                <i class="mdi mdi-logout text-primary"></i>
-                Logout
-              </a>
+             <a href="{{ url('/admin/logout') }}" class="dropdown-item"
+                  onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">
+                    <i class="mdi mdi-logout text-primary"></i> Logout</a>
+                    <form id="logout-form" action="{{ url('/admin/logout') }}" method="GET" style="display: none;">
+                    @csrf
+                    </form> 
             </div>
           </li>
         </ul>

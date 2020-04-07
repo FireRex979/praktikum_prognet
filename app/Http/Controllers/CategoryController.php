@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest:admin')->except('logout');
+        $this->middleware(['auth:admin']);
     }
     /**
      * Display a listing of the resource.

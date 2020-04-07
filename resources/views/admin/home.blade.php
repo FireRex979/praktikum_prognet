@@ -125,7 +125,7 @@
             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
               <img src="images/faces/face5.jpg" alt="profile"/>
               <span class="nav-profile-name">
-                {{ $admins->name }}
+                {{ Auth::user()->name }}
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
@@ -133,10 +133,13 @@
                 <i class="mdi mdi-account text-primary"></i>
                 Akun
               </a>
-              <a class="dropdown-item" href="/adminLogout">
-                <i class="mdi mdi-logout text-primary"></i>
-                Logout
-              </a>
+              <a href="{{ url('/admin/logout') }}" class="dropdown-item"
+                  onclick="event.preventDefault();
+                  document.getElementById('logout-form').submit();">
+                    <i class="mdi mdi-logout text-primary"></i> Logout</a>
+                    <form id="logout-form" action="{{ url('/admin/logout') }}" method="GET" style="display: none;">
+                    @csrf
+                    </form> 
             </div>
           </li>
         </ul>
