@@ -42,7 +42,7 @@
                     <br>
                     <span>
                     <button type="button" class="btn btn-warning btn-icon-text" onclick="/createProduct">
-                          <i class="mdi mdi-file-restore btn-icon-prepend"></i>     
+                          <i class="mdi mdi-file-restore btn-icon-prepend"></i>   
                           <a href="{{ route('products.edit',$product->id)}}" style="color: white;">Edit Produk</a>
                   </button>
                   <button type="button" class="btn btn-success btn-icon-text" onclick="/addImage/{{ $product->id }}">
