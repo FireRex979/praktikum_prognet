@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes(['verify' => true]);
@@ -60,3 +60,10 @@ Route::get('/categories/restore/{id}', 'CategoryController@restore');
 Route::get('/categories-restore-all', 'CategoryController@restore_all');
 Route::get('/categories/destroy/{id}', 'CategoryController@delete');
 Route::get('/categories-delete-all', 'CategoryController@delete_all');
+
+//User
+Route::resource('users', 'UserController');
+
+//Discount
+Route::resource('discounts', 'DiscountController')->middleware('authAdmin:admin');
+Route::get('/discounts/delete/{id}', 'DiscountController@soft_delete');

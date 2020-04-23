@@ -38,8 +38,16 @@
                             <input type="text" class="form-control" placeholder="Berat Produk" aria-label="Berat Produk" aria-describedby="basic-addon1" name="weight">
                         </div>
                         <div class="form-group">
+                            <label>Jenis Kategori</label>
+                            <select name="category" class="form-control" aria-describedby="basic-addon1" aria-label="Jenis Kategori">
+                                    <option value="Anak-Anak">Anak-Anak</option>
+                                    <option value="Pria">Pria</option>
+                                    <option value="Wanita">Wanita</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label>Kategori</label>
-                            <select name="category_id" class="form-control" aria-describedby="basic-addon1" aria-label="Kategori>
+                            <select name="category_id[]" class="form-control" aria-describedby="basic-addon1" aria-label="Kategori" multiple="multiple">
                                 @foreach($categories as $category)
                                     <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                 @endforeach

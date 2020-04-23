@@ -106,7 +106,7 @@ class CategoryController extends Controller
         ];
 
         $this->validate($request,[
-            'category_name' => 'required|unique:categories|max:100',
+            'category_name' => 'required|max:100',
         ],$messages);
 
         $update = [

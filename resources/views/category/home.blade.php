@@ -7,7 +7,7 @@
                   <h4 class="card-title">List Kategori</h4>
                   <button type="button" class="btn-sm btn-success btn-icon-text" onclick="/createProduct">
                           <i class="mdi mdi-upload btn-icon-prepend"></i>     
-                          <a href="{{ route('categories.create') }}" style="color: white;">Tambah Kurir</a>
+                          <a href="{{ route('categories.create') }}" style="color: white;">Tambah Kategori</a>
                   </button>
                   <button type="button" class="btn-sm btn-danger btn-icon-text" onclick="">
                       <i class="mdi  mdi-delete btn-icon-prepend"></i>

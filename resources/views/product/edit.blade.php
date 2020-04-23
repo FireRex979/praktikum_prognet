@@ -40,12 +40,21 @@
                             <input type="text" class="form-control" placeholder="Berat Produk" aria-label="Berat Produk" value="{{ $products->weight }}"  aria-describedby="basic-addon1" name="weight">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" name="category_id">
-                                @foreach($category as $categories)
-                                <option value="{{ $categories->id }}">{{ $categories->category_name }}</option>
-                                @endforeach
+                            <select class="form-control" name="category">
+                                <option value="Anak-Anak" <?php if($products->category == "Anak-Anak"): ?> selected="selected" <?php endif; ?>>Anak-Anak</option>
+                                <option value="Pria" <?php if($products->category == "Pria"): ?> selected="selected" <?php endif; ?>>Pria</option>
+                                <option value="Wanita" <?php if($products->category == "Wanita"): ?> selected="selected" <?php endif; ?>>Wanita</option>
                             </select>
                         </div>
+<!--                         <div class="form-group">
+                            
+                            <select class="form-control" name="category_id[]" multiple="multiple">
+                                @foreach($categories as $category)
+                                <option value="{{ $category->id }}" @foreach($details as $detail) {{ $detail->category_id == $category->id ? 'selected' : '' }} @endforeach>{{ $category->category_name }}</option>
+                                @endforeach
+                            </select>
+                            
+                        </div> -->
                     </div>
                         <div class="card-footer">
                             <button class="btn btn-md btn-outline-success" type="submit"  onclick="return confirm('Apa yakin ingin mengubah data ini?')">Edit</button>

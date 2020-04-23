@@ -19,13 +19,15 @@ class ProductController extends Controller
 
 	public function index(Request $request){
         /*$products['products'] = Product::orderby('id','desc')->paginate(10);*/
-        $products['products'] = DB::table('products')
-            ->join('product_category_details', 'products.id','=','product_category_details.product_id')
-            ->join('categories', 'categories.id','=','product_category_details.category_id')
-            ->select('products.*','categories.category_name')
+        $products = DB::table('products')
+            ->select('products.*')
             ->where('products.deleted_at','=', NULL)
             ->orderby('id','desc')->paginate(10);
-        return view('product.home',$products);
+        $categories = DB::table('categories')
+                        ->join('product_category_details', 'categories.id', '=', 'product_category_details.category_id')
+                        ->select('categories.*', 'product_category_details.*')
+                        ->get();
+        return view('product.home',compact('products', 'categories'));
 	}
 
     public function create(){
@@ -52,40 +54,49 @@ class ProductController extends Controller
         ],$messages);
 
     	$product = new Product;
-        $category = new Product_Category_Detail;
     	$product->product_name = $request->product_name;
     	$product->price = $request->price;
     	$product->description = $request->description;
     	$product->product_rate = 0;
     	$product->stock = $request->stock;
     	$product->weight = $request->weight;
-        $category->category_id = $request->category_id;
+        $product->category = $request->category;
     	$product->save();
-        $product_id = Product::orderBy('id', 'desc')->first()->id;
-        $category->product_id = $product_id;
-        $category->save();
 
-    	return redirect('/addImage/'.$product_id);
+        foreach ($request->category_id as $categories) {
+            $category = new Product_Category_Detail;
+            $category->category_id = $categories;
+            $category->product_id = $product->id;
+            $category->save();
+        }
+
+    	return redirect('/addImage/'.$product->id);
     }
 
     public function show($id){
         $where = array('products.id' => $id);
-    	$products['products'] = DB::table('products')
-            ->join('product_category_details', 'products.id','=','product_category_details.product_id')
-            ->join('categories', 'categories.id','=','product_category_details.category_id')
-            ->select('products.*','categories.category_name')
-            ->where($where)->first();
+    	$products = Product::find($id);
         $image = DB::table('products')
             ->join('product_images', 'products.id', '=', 'product_images.product_id')
             ->select('product_images.*')
             ->where($where)->get();
-        return view('product.show', compact('products', 'image', 'id'));
+        $categories = DB::table('categories')
+            ->join('product_category_details', 'categories.id', '=', 'product_category_details.category_id')
+            ->join('products', 'products.id', '=', 'product_category_details.product_id')
+            ->select('categories.category_name')
+            ->where('products.id', '=', $id)->get();
+        return view('product.show', compact('products', 'image', 'categories', 'id'));
     }
 
     public function edit($id){
-        $category = Category::all();
+        $categories = DB::table('categories')->get();
         $products = Product::find($id);
-        return view('product.edit', compact('category', 'products', 'id'));
+        $details = DB::table('product_category_details')
+                    ->join('products', 'products.id', '=', 'product_category_details.product_id')
+                    ->select('product_category_details.*')
+                    ->where('products.id', '=', $id)
+                    ->get();
+        return view('product.edit', compact('categories', 'products', 'details', 'id'));
     }
 
     public function update(Request $request, $id){
@@ -113,14 +124,6 @@ class ProductController extends Controller
             'weight' => $request->weight,
         ];
         Product::where('id', $id)->update($update);
-
-        $product_id = Product::where('product_name',$request->product_name)->first();
-
-        $update_category = [
-            'category_id' => $request->category_id,
-        ];
-
-        Product_Category_Detail::where('product_id', $id)->update($update_category);
         return Redirect::to('products');
     }
 

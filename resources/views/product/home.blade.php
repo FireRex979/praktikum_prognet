@@ -1,7 +1,7 @@
 @extends('layouts.table')
 @section('judul','Admin | Produk Page')
 @section('content')
-    <div class="col-lg-10 grid-margin stretch-card">
+    <div class="col-lg-11 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">List Produk</h4>
@@ -13,6 +13,10 @@
                   <button type="button" class="btn-sm btn-danger btn-icon-text" onclick="">
                       <i class="mdi  mdi-delete btn-icon-prepend"></i>
                       <a href="/products-trash" style="color: white">Trash</a>
+                  </button>
+                  <button type="button" class="btn-sm btn-primary btn-icon-text" onclick="">
+                      <i class="mdi mdi-cash-usd btn-icon-prepend"></i>
+                      <a href="{{ route('discounts.index') }}" style="color: white">Discount</a>
                   </button>
                   </span>
                   <div class="table-responsive">
@@ -38,6 +42,9 @@
                             Deskripsi Produk
                           </th>
                           <th>
+                            Jenis Kategori
+                          </th>
+                          <th>
                             Kategori
                           </th>
                           <th>
@@ -54,7 +61,13 @@
                           <td>{{ $product->weight }}</td>
                           <td>{{ $product->price }}</td>
                           <td>{{ $product->description }}</td>
-                          <td>{{ $product->category_name }}</td>
+                          <td>{{ $product->category }}</td>
+                          <td> @foreach($categories as $category)
+                                  @if($product->id == $category->product_id)
+                                    <li>{{ $category->category_name }}</li>
+                                  @endif
+                               @endforeach
+                          </td>
                           <td>
                               <a class="btn-sm btn-info" href="{{ route('products.show',$product->id) }}">Show</a>
     

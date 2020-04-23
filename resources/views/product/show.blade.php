@@ -7,35 +7,36 @@
                   <h4 class="card-title">List Produk</h4>
                   <div class="table-responsive">
                     <table class="table table-striped">
-                      @foreach($products as $product)
                       <tbody>
                         <tr>
                           <td>Nama Produk</td>
-                          <td>{{ $product->product_name }}</td>
+                          <td>{{ $products->product_name }}</td>
                         </tr>
                         <tr>
                           <td>Rating Produk</td>
-                          <td>{{ $product->product_rate }}</td>
+                          <td>{{ $products->product_rate }}</td>
                         </tr>
                         <tr>
                           <td>Stock</td>
-                          <td>{{ $product->stock }}</td>
+                          <td>{{ $products->stock }}</td>
                         </tr>
                         <tr>
                           <td>Berat</td>
-                          <td>{{ $product->weight }}</td>
+                          <td>{{ $products->weight }}</td>
                         </tr>
                         <tr>
                           <td>Harga</td>
-                          <td>{{ $product->price }}</td>
+                          <td>{{ $products->price }}</td>
                         </tr>
                         <tr>
                           <td>Deskripsi</td>
-                          <td>{{ $product->description }}</td>
+                          <td>{{ $products->description }}</td>
                         </tr>
                         <tr>
-                          <td>Kategori</td>
-                          <td>{{ $product->category_name }}</td>
+                          <td>Jenis Kategori</td>
+                          <td>
+                            {{ $products->category }}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -43,15 +44,40 @@
                     <span>
                     <button type="button" class="btn btn-warning btn-icon-text" onclick="/createProduct">
                           <i class="mdi mdi-file-restore btn-icon-prepend"></i>   
-                          <a href="{{ route('products.edit',$product->id)}}" style="color: white;">Edit Produk</a>
+                          <a href="{{ route('products.edit',$products->id)}}" style="color: white;">Edit Produk</a>
                   </button>
-                  <button type="button" class="btn btn-success btn-icon-text" onclick="/addImage/{{ $product->id }}">
+                  <button type="button" class="btn btn-success btn-icon-text" onclick="/addImage/{{ $products->id }}">
                           <i class="mdi mdi-file-restore btn-icon-prepend"></i>     
-                          <a href="/addImage/{{ $product->id }}" style="color: white;">Tambah Foto Produk</a>
+                          <a href="/addImage/{{ $products->id }}" style="color: white;">Tambah Foto Produk</a>
                   </button>
-                  @endforeach
                   </span>
                   </div>
+                </div>
+                <div class="card-body">
+                  <h4 class="card-title">Kategori Produk</h4>
+                    <div class="container">
+                      <div class="table-responsive">
+                        <button class="btn btn-success">Tambah Kategori</button>
+                        <table class="table-striped">
+                          <thead>
+                            <tr>
+                              <th>No</th>
+                              <th>Nama Kategori</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach($categories as $category)
+                              <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $category->category_name }}</td>
+                                <td>DELETE</td>
+                              </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>    
                 </div>
                 <div class="card-body">
                   <h4 class="card-title">Foto Produk</h4>
