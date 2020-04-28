@@ -25,19 +25,16 @@ class RedirectIfAuthenticated
                 }
                 break;
 
-                default:
-                if (Auth::guard($guard)->check()){
-                    return redirect()->route('admin.dashboard');
-                }
-                break;
             
             case 'web' :
-                if (Auth::guard($guard)->redirect()->route('admin.login')) {
-                    return redirect()->route('/home') ;
+                if (Auth::guard($guard)->check()) {
+                    return redirect()->route('home') ;
                 }
+                break;
 
-                if (Auth::guard($guard)->redirect()->route('/admin/products')) {
-                    return redirect()->route('/home') ;
+                default:
+                if (Auth::guard($guard)->check()) {
+                    return redirect()->route('home') ;
                 }
                 break;
         }

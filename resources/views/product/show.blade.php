@@ -42,22 +42,21 @@
                     </table>
                     <br>
                     <span>
-                    <button type="button" class="btn btn-warning btn-icon-text" onclick="/createProduct">
-                          <i class="mdi mdi-file-restore btn-icon-prepend"></i>   
-                          <a href="{{ route('products.edit',$products->id)}}" style="color: white;">Edit Produk</a>
+                    <button type="button" class="btn btn-warning btn-icon-text" onclick="/createProduct">    
+                          <a href="{{ route('products.edit',$products->id)}}" style="color: white;"><i class="mdi mdi-lead-pencil btn-icon-prepend"></i> </a>
                   </button>
                   <button type="button" class="btn btn-success btn-icon-text" onclick="/addImage/{{ $products->id }}">
-                          <i class="mdi mdi-file-restore btn-icon-prepend"></i>     
-                          <a href="/addImage/{{ $products->id }}" style="color: white;">Tambah Foto Produk</a>
+                          <a href="/addImage/{{ $products->id }}" style="color: white;"><i class="mdi mdi-image-area btn-icon-prepend"></i>     </a>
                   </button>
                   </span>
                   </div>
                 </div>
-                <div class="card-body">
+                <div class="card">
+                  <div class="card-body">
                   <h4 class="card-title">Kategori Produk</h4>
+                  <button class="btn btn-success"><a href="/category_detail/create/{{ $products->id }}" style="color: white;">Tambah Kategori</a></button>
                     <div class="container">
-                      <div class="table-responsive">
-                        <button class="btn btn-success">Tambah Kategori</button>
+                      <div class="table">
                         <table class="table-striped">
                           <thead>
                             <tr>
@@ -71,7 +70,7 @@
                               <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $category->category_name }}</td>
-                                <td>DELETE</td>
+                                <td> <a class="btn-sm btn-danger" href="/category_detail/delete/{{ $category->id }}" onclick="return confirm('Apa yakin ingin menghapus data ini?')">Delete</a> </td>
                               </tr>
                             @endforeach
                           </tbody>
@@ -79,7 +78,9 @@
                       </div>
                     </div>    
                 </div>
-                <div class="card-body">
+                </div>
+                <div class="card">
+                  <div class="card-body">
                   <h4 class="card-title">Foto Produk</h4>
                     <div class="container">
                       <div class="row">
@@ -99,6 +100,7 @@
                         @endforeach
                       </div>
                     </div>    
+                </div>
                 </div>
               </div>
                 

@@ -5,6 +5,7 @@ use App\Product;
 use App\Category;
 use DB;
 use Illuminate\Http\Request;
+use Redirect;
 
 class Product_Category_DetailController extends Controller
 {
@@ -89,8 +90,9 @@ class Product_Category_DetailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product_Category_Detail $product_category_detail)
     {
-        //
+        $product_category_detail->delete();
+        return redirect()->back();
     }
 }

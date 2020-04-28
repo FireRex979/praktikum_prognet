@@ -18,6 +18,7 @@
                       <thead>
                         <tr>
                           <th>
+                            <th>No</th>
                             Nama Kategori
                           </th>
                           <th>
@@ -28,13 +29,14 @@
                       <tbody>
                         @foreach($categories as $category)
                         <tr>
+                          <td>{{ $loop->iteration }}</td>
                           <td>{{ $category->category_name }}</td>
                           <td>
-                              <a class="btn-sm btn-info" href="{{ route('categories.show',$category->id) }}">Show</a>
+                              <a class="btn-sm btn-info" href="{{ route('categories.show',$category->id) }}"><i class="mdi mdi-eye"></i></a>
     
-                              <a class="btn-sm btn-warning" href="{{ route('categories.edit',$category->id)}}">Edit</a>
+                              <a class="btn-sm btn-warning" href="{{ route('categories.edit',$category->id)}}"><i class="mdi mdi-pencil"></i></a>
                               
-                              <a class="btn-sm btn-danger" href="/categories/delete/{{ $category->id }}" onclick="return confirm('Apa yakin ingin menghapus data ini?')">Delete</a>
+                              <a class="btn-sm btn-danger" href="/categories/delete/{{ $category->id }}" onclick="return confirm('Apa yakin ingin menghapus data ini?')"><i class="mdi mdi-delete"></i></a>
                           </td>
                         </tr>
                         @endforeach

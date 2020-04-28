@@ -21,15 +21,10 @@ class DiscountController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        $discounts['discounts'] = DB::table('discounts')
-                                    ->join('products', 'products.id', '=', 'discounts.id_product')
-                                    ->join('product_category_details', 'products.id', '=', 'product_category_details.product_id')
-                                    ->select('discounts.*', 'products.product_name', 'product_category_details.category')
-                                    ->where('discounts.deleted_at', '=', NULL)
-                                    ->orderby('discounts.id', 'desc')->paginate(5);
-        return view('discount.home', $discounts);
+        $discounts['discounts'] = DB::table('discounts')->select('discounts.*')->where('discounts.id_product', '=', $id)->get();
+        return view('discount.home', compact('discounts', 'id'));
     }
 
     /**
@@ -40,8 +35,7 @@ class DiscountController extends Controller
     public function create()
     {
         $products['products'] = DB::table('products')
-                            ->join('product_category_details', 'products.id', '=', 'product_category_details.product_id')
-                            ->select('products.*', 'product_category_details.category')
+                            ->select('products.*')
                             ->get();
         return view('discount.create', $products);
     }
@@ -76,7 +70,7 @@ class DiscountController extends Controller
         $discounts->start  = $request->start;
         $discounts->end = $request->end;
         $discounts->save();
-        return Redirect::to('discounts');
+        return Redirect::to('discounts/'.$discounts->id_product);
     }
 
     /**
@@ -85,9 +79,14 @@ class DiscountController extends Controller
      * @param  \App\Discount  $discount
      * @return \Illuminate\Http\Response
      */
-    public function show(Discount $discount)
+    public function show($id)
     {
-        //
+        $discounts = DB::table('discounts')->select('discounts.*')->where('discounts.id_product', '=', $id)
+                    ->where('discounts.deleted_at', '=', null)
+                    ->orderby('discounts.end', 'desc')->paginate(5);
+        $max_date = DB::table('discounts')->where('discounts.id_product', '=', $id)->max('discounts.end');
+                    
+        return view('discount.home', compact('discounts', 'id', 'max_date'));
     }
 
     /**
@@ -99,9 +98,8 @@ class DiscountController extends Controller
     public function edit($id)
     {
         $products = DB::table('products')
-                                    ->join('product_category_details', 'products.id', '=', 'product_category_details.product_id')
-                                    ->select('products.*', 'product_category_details.category')
-                                    ->get();
+                            ->select('products.*')
+                            ->get();
         $discount = Discount::find($id);
         return view('discount.edit', compact('products', 'discount', 'id'));
     }
@@ -137,7 +135,7 @@ class DiscountController extends Controller
             'end' => $request->end,
         ];
         Discount::where('id', $id)->update($update);
-        return Redirect::to('discounts');
+        return Redirect::to('discounts/'.$update->id_product);
     }
 
     /**
@@ -154,6 +152,14 @@ class DiscountController extends Controller
     public function soft_delete($id){
         $discounts = Discount::find($id);
         $discounts->delete();
-        return Redirect::to('discounts');
+        return redirect()->back();
+    }
+
+    public function add_discount($id){
+        $products = DB::table('products')
+                    ->select('products.*')
+                    ->where('products.id', '=', $id)
+                    ->get();
+        return view('discount.create', compact('products', 'id'));
     }
 }

@@ -1,335 +1,174 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-
-    <!-- Title  -->
-    <title>Essence - Fashion Ecommerce Template</title>
-
-    <!-- Favicon  -->
-    <link rel="icon" href="img/core-img/favicon.ico">
-
-    <!-- Core Style CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/user/css/core-style.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/user/style.css') }}">
-
-</head>
-
-<body>
-    <!-- ##### Header Area Start ##### -->
-    <header class="header_area">
-        <div class="classy-nav-container breakpoint-off d-flex align-items-center justify-content-between">
-            <!-- Classy Menu -->
-            <nav class="classy-navbar" id="essenceNav">
-                <!-- Logo -->
-                <a class="nav-brand" href="index.html"><img src="{{ asset('assets/user/img/core-img/logo.png') }}" alt=""></a>
-                <!-- Navbar Toggler -->
-                <div class="classy-navbar-toggler">
-                    <span class="navbarToggler"><span></span><span></span><span></span></span>
-                </div>
-                <!-- Menu -->
-                <div class="classy-menu">
-                    <!-- close btn -->
-                    <div class="classycloseIcon">
-                        <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                    </div>
-                    <!-- Nav Start -->
-                    <div class="classynav">
-                        <ul>
-                            <li><a href="#">Shop</a>
-                                <div class="megamenu">
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Women's Collection</li>
-                                        <li><a href="shop.html">Dresses</a></li>
-                                        <li><a href="shop.html">Blouses &amp; Shirts</a></li>
-                                        <li><a href="shop.html">T-shirts</a></li>
-                                        <li><a href="shop.html">Rompers</a></li>
-                                        <li><a href="shop.html">Bras &amp; Panties</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Men's Collection</li>
-                                        <li><a href="shop.html">T-Shirts</a></li>
-                                        <li><a href="shop.html">Polo</a></li>
-                                        <li><a href="shop.html">Shirts</a></li>
-                                        <li><a href="shop.html">Jackets</a></li>
-                                        <li><a href="shop.html">Trench</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Kid's Collection</li>
-                                        <li><a href="shop.html">Dresses</a></li>
-                                        <li><a href="shop.html">Shirts</a></li>
-                                        <li><a href="shop.html">T-shirts</a></li>
-                                        <li><a href="shop.html">Jackets</a></li>
-                                        <li><a href="shop.html">Trench</a></li>
-                                    </ul>
-                                    <div class="single-mega cn-col-4">
-                                        <img src="{{ asset('assets/user/img/bg-img/bg-6.jpg') }}" alt="">
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="single-product-details.html">Product Details</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="single-blog.html">Single Blog</a></li>
-                                    <li><a href="regular-page.html">Regular Page</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                    <!-- Nav End -->
-                </div>
-            </nav>
-
-            <!-- Header Meta Data -->
-            <div class="header-meta d-flex clearfix justify-content-end">
-                <!-- Search Area -->
-                <div class="search-area">
-                    <form action="#" method="post">
-                        <input type="search" name="search" id="headerSearch" placeholder="Type for search">
-                        <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </form>
-                </div>
-                <!-- Favourite Area -->
-                <div class="favourite-area">
-                    <a href="#"><img src="{{ asset('assets/user/img/core-img/heart.svg') }}" alt=""></a>
-                </div>
-                <!-- User Login Info -->
-                <div class="user-login-info">
-                    <a href="#"><img src="{{ asset('assets/user/img/core-img/user.svg') }}" alt=""></a>
-                </div>
-                <!-- Cart Area -->
-                <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="{{ asset('assets/user/img/core-img/bag.svg') }}" alt=""> <span>3</span></a>
-                </div>
-            </div>
-
-        </div>
-    </header>
-    <!-- ##### Header Area End ##### -->
-
-    <!-- ##### Right Side Cart Area ##### -->
-    <div class="cart-bg-overlay"></div>
-
-    <div class="right-side-cart-area">
-
-        <!-- Cart Button -->
-        <div class="cart-button">
-            <a href="#" id="rightSideCart"><img src="{{ asset('assets/user/img/core-img/bag.svg') }}" alt=""> <span>3</span></a>
-        </div>
-
-        <div class="cart-content d-flex">
-
-            <!-- Cart List Area -->
-            <div class="cart-list">
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="{{ asset('assets/user/img/product-img/product-1.jpg') }}" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="{{ asset('assets/user/img/product-img/product-2.jpg') }}" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="{{ asset('assets/user/img/product-img/product-3.jpg') }}" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Cart Summary -->
-            <div class="cart-amount-summary">
-
-                <h2>Summary</h2>
-                <ul class="summary-table">
-                    <li><span>subtotal:</span> <span>$274.00</span></li>
-                    <li><span>delivery:</span> <span>Free</span></li>
-                    <li><span>discount:</span> <span>-15%</span></li>
-                    <li><span>total:</span> <span>$232.00</span></li>
-                </ul>
-                <div class="checkout-btn mt-100">
-                    <a href="checkout.html" class="btn essence-btn">check out</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ##### Right Side Cart End ##### -->
-
-    <!-- ##### Welcome Area Start ##### -->
-    <section class="welcome_area bg-img background-overlay" style="background-image: url({{ URL::asset('assets/user/img/bg-img/bg-1.jpg') }});">
+@extends('layouts.user')
+@section('judul','User | Home Page')
+@section('content')
+    <!-- ##### Breadcumb Area Start ##### -->
+    <div class="breadcumb_area bg-img" style="background-image: url(assets/user/img/bg-img/breadcumb.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
-                    <div class="hero-content">
-                        <h6>asoss</h6>
-                        <h2>New Collection</h2>
-                        <a href="#" class="btn essence-btn">view collection</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- ##### Welcome Area End ##### -->
-
-    <!-- ##### Top Catagory Area Start ##### -->
-    <div class="top_catagory_area section-padding-80 clearfix">
-        <div class="container">
-            <div class="row justify-content-center">
-                <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img" style="background-image: url({{ URL::asset('assets/user/img/bg-img/bg-2.jpg') }});">
-                        <div class="catagory-content">
-                            <a href="#">Clothing</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img" style="background-image: url({{ URL::asset('assets/user/img/bg-img/bg-3.jpg') }});">
-                        <div class="catagory-content">
-                            <a href="#">Shoes</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Catagory -->
-                <div class="col-12 col-sm-6 col-md-4">
-                    <div class="single_catagory_area d-flex align-items-center justify-content-center bg-img" style="background-image: url({{ URL::asset('assets/user/img/bg-img/bg-4.jpg') }});">
-                        <div class="catagory-content">
-                            <a href="#">Accessories</a>
-                        </div>
+                    <div class="page-title text-center">
+                        <h2>Semua</h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- ##### Top Catagory Area End ##### -->
+    <!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### New Arrivals Area Start ##### -->
-    <section class="new_arrivals_area section-padding-80 clearfix">
+    <!-- ##### Shop Grid Area Start ##### -->
+    <section class="shop_grid_area section-padding-80">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <div class="section-heading text-center">
-                        <h2>Popular Products</h2>
+                <div class="col-12 col-md-4 col-lg-3">
+                    <div class="shop_sidebar_area">
+
+                        <!-- ##### Single Widget ##### -->
+                        <div class="widget catagory mb-50">
+                            <!-- Widget Title -->
+                            <h6 class="widget-title mb-30">Kategori</h6>
+
+                            <!--  Catagories  -->
+                            <div class="catagories-menu">
+                                <ul id="menu-content2" class="menu-content collapse show">
+                                    <!-- Single Item -->
+                                    <li data-toggle="collapse" data-target="#clothing">
+                                        <a href="#">Anak-Anak</a>
+                                        <ul class="sub-menu collapse show" id="clothing">
+                                            <li><a href="#">All</a></li>
+                                            <li><a href="#">Bodysuits</a></li>
+                                            <li><a href="#">Dresses</a></li>
+                                            <li><a href="#">Hoodies &amp; Sweats</a></li>
+                                            <li><a href="#">Jackets &amp; Coats</a></li>
+                                            <li><a href="#">Jeans</a></li>
+                                            <li><a href="#">Pants &amp; Leggings</a></li>
+                                            <li><a href="#">Rompers &amp; Jumpsuits</a></li>
+                                            <li><a href="#">Shirts &amp; Blouses</a></li>
+                                            <li><a href="#">Shirts</a></li>
+                                            <li><a href="#">Sweaters &amp; Knits</a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- Single Item -->
+                                    <li data-toggle="collapse" data-target="#shoes" class="collapsed">
+                                        <a href="#">Pria</a>
+                                        <ul class="sub-menu collapse" id="shoes">
+                                            <li><a href="#">All</a></li>
+                                            <li><a href="#">Bodysuits</a></li>
+                                            <li><a href="#">Dresses</a></li>
+                                            <li><a href="#">Hoodies &amp; Sweats</a></li>
+                                            <li><a href="#">Jackets &amp; Coats</a></li>
+                                            <li><a href="#">Jeans</a></li>
+                                            <li><a href="#">Pants &amp; Leggings</a></li>
+                                            <li><a href="#">Rompers &amp; Jumpsuits</a></li>
+                                            <li><a href="#">Shirts &amp; Blouses</a></li>
+                                            <li><a href="#">Shirts</a></li>
+                                            <li><a href="#">Sweaters &amp; Knits</a></li>
+                                        </ul>
+                                    </li>
+                                    <!-- Single Item -->
+                                    <li data-toggle="collapse" data-target="#accessories" class="collapsed">
+                                        <a href="#">Wanita</a>
+                                        <ul class="sub-menu collapse" id="accessories">
+                                            <li><a href="#">All</a></li>
+                                            <li><a href="#">Bodysuits</a></li>
+                                            <li><a href="#">Dresses</a></li>
+                                            <li><a href="#">Hoodies &amp; Sweats</a></li>
+                                            <li><a href="#">Jackets &amp; Coats</a></li>
+                                            <li><a href="#">Jeans</a></li>
+                                            <li><a href="#">Pants &amp; Leggings</a></li>
+                                            <li><a href="#">Rompers &amp; Jumpsuits</a></li>
+                                            <li><a href="#">Shirts &amp; Blouses</a></li>
+                                            <li><a href="#">Shirts</a></li>
+                                            <li><a href="#">Sweaters &amp; Knits</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="popular-products-slides owl-carousel">
-                        @foreach($products as $favorite)
-                        <!-- Single Product -->
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <img src="/image/product_image/{{$favorite->image_name}}" alt="">
-                                <!-- Favourite -->
-                                <div class="product-favourite">
-                                    <a href="#" class="favme fa fa-heart"></a>
-                                </div>
-                            </div>
-                            <!-- Product Description -->
-                            <div class="product-description">
-                                <span>topshop</span>
-                                <a href="single-product-details.html">
-                                    <h6>Knot Front Mini Dress</h6>
-                                </a>
-                                <p class="product-price">Rp. {{ $favorite->harga }}</p>
-
-                                <!-- Hover Content -->
-                                <div class="hover-content">
-                                    <!-- Add to Cart -->
-                                    <div class="add-to-cart-btn">
-                                        <a href="#" class="btn essence-btn">Add to Cart</a>
+                <div class="col-12 col-md-8 col-lg-9">
+                    <div class="shop_grid_product_area">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="product-topbar d-flex align-items-center justify-content-between">
+                                    <!-- Total Products -->
+                                    <div class="total-products">
+                                        <p><span>186</span> products found</p>
+                                    </div>
+                                    <!-- Sorting -->
+                                    <div class="product-sorting d-flex">
+                                        <p>Sort by:</p>
+                                        <form action="#" method="get">
+                                            <select name="select" id="sortByselect">
+                                                <option value="value">Highest Rated</option>
+                                                <option value="value">Newest</option>
+                                                <option value="value">Price: $$ - $</option>
+                                                <option value="value">Price: $ - $$</option>
+                                            </select>
+                                            <input type="submit" class="d-none" value="">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @endforeach
-                        
+
+                        <div class="row">
+                        	@foreach($products as $product)
+                        	<?php if (isset($product->product_image)):?>
+                            <!-- Single Product -->
+                            <div class="col-12 col-sm-6 col-lg-4">
+                            	
+                                <div class="single-product-wrapper">
+                                    <!-- Product Image -->
+                                    
+                                    <div class="product-img">
+                                    	@foreach($product->product_image as $image)
+                                        <img src="/image/product_image/{{$image->image_name}}" alt="">
+                                        <!-- Product Badge -->
+                                        @break
+                            			@endforeach
+                                        <div class="product-badge offer-badge">
+                                            <span>-30%</span>
+                                        </div>
+                                        <!-- Favourite -->
+                                        <div class="product-favourite">
+                                            <a href="#" class="favme fa fa-heart"></a>
+                                        </div>
+                                    </div>
+                                    <!-- Product Description -->
+                                    <div class="product-description">
+                                        <span>topshop</span>
+                                        <a href="{{ route('users.show', $product->id) }}">
+                                        	<p>Rating {{ $product->product_rate }}</p>
+                                            <h6>{{ $product->product_name }}</h6>
+                                        </a>
+                                        <p class="product-price">Rp.{{ $product->price }}</p>
+                                        <!-- Hover Content -->
+                                        <div class="hover-content">
+                                            <!-- Add to Cart -->
+                                            <div class="add-to-cart-btn">
+                                                <a href="#" class="btn essence-btn">Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+                            @endforeach
+
+                        </div>
                     </div>
+                    <!-- Pagination -->
+                    <nav aria-label="navigation">
+                        <ul class="pagination mt-50 mb-70">{!! $products->links() !!}
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
     </section>
-    <!-- ##### New Arrivals Area End ##### -->
-
-    <!-- ##### Brands Area Start ##### -->
-    <div class="brands-area d-flex align-items-center justify-content-between">
-        <!-- Brand Logo -->
-        <div class="single-brands-logo">
-            <img src="img/core-img/brand1.png" alt="">
-        </div>
-        <!-- Brand Logo -->
-        <div class="single-brands-logo">
-            <img src="img/core-img/brand2.png" alt="">
-        </div>
-        <!-- Brand Logo -->
-        <div class="single-brands-logo">
-            <img src="img/core-img/brand3.png" alt="">
-        </div>
-        <!-- Brand Logo -->
-        <div class="single-brands-logo">
-            <img src="img/core-img/brand4.png" alt="">
-        </div>
-        <!-- Brand Logo -->
-        <div class="single-brands-logo">
-            <img src="img/core-img/brand5.png" alt="">
-        </div>
-        <!-- Brand Logo -->
-        <div class="single-brands-logo">
-            <img src="img/core-img/brand6.png" alt="">
-        </div>
-    </div>
-    <!-- ##### Brands Area End ##### -->
+    <!-- ##### Shop Grid Area End ##### -->
 
     <!-- ##### Footer Area Start ##### -->
     <footer class="footer_area clearfix">
@@ -395,34 +234,4 @@
                     </div>
                 </div>
             </div>
-
-<div class="row mt-5">
-                <div class="col-md-12 text-center">
-                    <p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-                </div>
-            </div>
-
-        </div>
-    </footer>
-    <!-- ##### Footer Area End ##### -->
-
-    <!-- jQuery (Necessary for All JavaScript Plugins) -->
-    <script src="{{ asset('assets/user/js/jquery/jquery-2.2.4.min.js') }}"></script>
-    <!-- Popper js -->
-    <script src="{{ asset('assets/user/js/popper.min.js') }}"></script>
-    <!-- Bootstrap js -->
-    <script src="{{ asset('assets/user/js/bootstrap.min.js') }}"></script>
-    <!-- Plugins js -->
-    <script src="{{ asset('assets/user/js/plugins.js') }}"></script>
-    <!-- Classy Nav js -->
-    <script src="{{ asset('assets/user/js/classy-nav.min.js') }}"></script>
-    <!-- Active js -->
-    <script src="{{ asset('assets/user/js/active.js') }}"></script>
-
-</body>
-
-</html>
+@endsection

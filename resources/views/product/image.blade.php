@@ -19,9 +19,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Pilih Foto</label>
-                            <input type="file" class="form-control" placeholder="Nama Produk" aria-label="Nama Produk" aria-describedby="basic-addon1" name="files[]">
-                            <input type="file" class="form-control" placeholder="Nama Produk" aria-label="Nama Produk" aria-describedby="basic-addon1" name="files[]">
-                            <input type="file" class="form-control" placeholder="Nama Produk" aria-label="Nama Produk" aria-describedby="basic-addon1" name="files[]">
+                            <input type="file" class="form-control" placeholder="Nama Produk" aria-label="Nama Produk" aria-describedby="basic-addon1" name="files[]" multiple="multiple">
                         </div>
                         
                         </div>

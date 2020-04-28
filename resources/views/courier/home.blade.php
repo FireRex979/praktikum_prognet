@@ -18,6 +18,9 @@
                       <thead>
                         <tr>
                           <th>
+                            No
+                          </th>
+                          <th>
                             Nama Kurir
                           </th>
                           <th>
@@ -28,13 +31,14 @@
                       <tbody>
                         @foreach($couriers as $courier)
                         <tr>
+                          <td>{{ $loop->iteration }}</td>
                           <td>{{ $courier->courier }}</td>
                           <td>
-                              <a class="btn-sm btn-info" href="{{ route('couriers.show',$courier->id) }}">Show</a>
+                              <a class="btn-sm btn-info" href="{{ route('couriers.show',$courier->id) }}"><i class="mdi mdi-eye"></i></a>
     
-                              <a class="btn-sm btn-warning" href="{{ route('couriers.edit',$courier->id)}}">Edit</a>
+                              <a class="btn-sm btn-warning" href="{{ route('couriers.edit',$courier->id)}}"><i class="mdi mdi-pencil"></i></a>
 
-                              <a class="btn-sm btn-danger" href="/couriers/delete/{{ $courier->id }}" onclick="return confirm('Apa yakin ingin menghapus permanen data ini?')">Delete</a>
+                              <a class="btn-sm btn-danger" href="/couriers/delete/{{ $courier->id }}" onclick="return confirm('Apa yakin ingin menghapus permanen data ini?')"><i class="mdi mdi-delete"></i></a>
                           </td>
                         </tr>
                         @endforeach

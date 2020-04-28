@@ -4,14 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class Product_Category_Detail extends Model
+class Cart extends Model
 {
-	protected $table='product_category_details';
-
     use SoftDeletes;
 
+    protected $table = 'carts';
+
     protected $fillable = [
-        'category_id', 'product_id', 'category',
+        'user_id',
+        'product_id',
+        'qty',
+        'status',
     ];
 
     protected $dates = ['deleted_at'];

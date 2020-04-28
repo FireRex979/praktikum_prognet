@@ -17,13 +17,17 @@
                             </center>
                         </div>
                     <div class="card-body">
+                        @foreach($products as $product)
+                        <div class="form-group">
+                            <input type="text" class="form-control" aria-label="Nama Produk" aria-describedby="basic-addon1" name="id_product" value="{{ $product->id }}" readonly="readonly" hidden="hidden">
+                        </div>
                         <div class="form-group">
                             <label>Nama Product</label>
-                            <select name="id_product" class="form-control" aria-describedby="basic-addon1" aria-label="Produk>
-                                @foreach($products as $product)
-                                    <option value="{{ $product->id }}"><?php echo $product->product_name." (".$product->category.")"; ?></option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control" aria-label="Nama Produk" aria-describedby="basic-addon1" name="product_name" value="{{ $product->product_name }}" readonly="readonly">
+                        </div>
+                        <div class="form-group">
+                            <label>Harga</label>
+                            <input type="text" class="form-control" aria-label="Harga" aria-describedby="basic-addon1" name="product_name" value="{{ $product->price }}" readonly="readonly">
                         </div>
                         <div class="form-group">
                             <label>Besar Diskon</label>
@@ -37,6 +41,7 @@
                             <label>Berakhir</label>
                             <input type="date" class="form-control" aria-label="Berakhir" aria-describedby="basic-addon1" name="end">
                         </div>
+                        @endforeach
                         <div class="card-footer">
                             <button class="btn btn-md btn-outline-success" type="submit">Tambah</button>
                         </div>

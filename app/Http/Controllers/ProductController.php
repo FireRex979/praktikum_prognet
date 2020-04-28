@@ -47,7 +47,7 @@ class ProductController extends Controller
         ];
 
         $this->validate($request,[
-            'product_name' => 'required|unique:products|max:100',
+            'product_name' => 'required|max:100',
             'price' => 'required|numeric',
             'stock' => 'required|numeric|min:0',
             'weight' => 'required|numeric|min:0',
@@ -83,8 +83,8 @@ class ProductController extends Controller
         $categories = DB::table('categories')
             ->join('product_category_details', 'categories.id', '=', 'product_category_details.category_id')
             ->join('products', 'products.id', '=', 'product_category_details.product_id')
-            ->select('categories.category_name')
-            ->where('products.id', '=', $id)->get();
+            ->select('categories.category_name', 'product_category_details.*')
+            ->where('products.id', '=', $id)->where('product_category_details.deleted_at', '=', NULL)->get();
         return view('product.show', compact('products', 'image', 'categories', 'id'));
     }
 
@@ -146,7 +146,7 @@ class ProductController extends Controller
     public function upload_image(Request $request, $id){
         
         $this->validate($request, [
-            'files.*' => 'required',
+            'files.*' => 'required|image|mimes:jpg,png,jpeg,gif,svg',
         ]);
 
         $files = [];
@@ -199,5 +199,30 @@ class ProductController extends Controller
         $products = Product::onlyTrashed();
         $products->forceDelete();
         return Redirect::to('products-trash');
+    }
+
+    public function soft_delete_category($id){
+        $category_detail = Product_Category_Detail::find($id);
+        $category_detail->delete();
+        return redirect()->back();
+    }
+
+    public function add_category($id){
+        $product = Product::find($id);
+        $categories = Category::all();
+        $category_details = DB::table('products')
+            ->join('product_category_details', 'products.id', '=', 'product_category_details.product_id')
+            ->select('product_category_details.*')
+            ->where('products.id', '=', $id)->where('product_category_details.deleted_at', '=', NULL)
+            ->get();
+        return view('product.create_category', compact('product', 'categories' , 'category_details','id'));
+    }
+
+    public function store_category(Request $request){
+        $category_detail = new Product_Category_Detail;
+        $category_detail->category_id = $request->category_id;
+        $category_detail->product_id = $request->product_id;
+        $category_detail->save();
+        return redirect('/products/'.$request->product_id);
     }
 }

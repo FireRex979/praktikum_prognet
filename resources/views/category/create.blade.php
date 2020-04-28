@@ -21,14 +21,6 @@
                             <label>Nama Kategori</label>
                             <input type="text" class="form-control" placeholder="Nama Kategori" aria-label="Nama Kategori" aria-describedby="basic-addon1" name="category_name">
                          </div>
-                         <div class="form-group">
-                            <label>Jenis Kategori</label>
-                            <select class="form-control" aria-label="Jenis Kategori" aria-describedby="basic-addon1" name="category">
-                                <option value="1">Pria</option>
-                                <option value="2">Wanita</option>
-                                <option value="3">Anak-anak</option>
-                            </select>
-                         </div>
                         <div class="card-footer">
                             <button class="btn btn-md btn-outline-success" type="submit">Tambah</button>
                         </div>

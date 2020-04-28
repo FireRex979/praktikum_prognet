@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Cart;
 use Illuminate\Http\Request;
-use App\Product;
-use App\Category;
-use App\User;
-use DB;
 
-class UserController extends Controller
+class CartController extends Controller
 {
     public function __construct()
     {
@@ -21,8 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $products = Product::with('product_image')->orderby('products.id', 'desc')->paginate(9);
-        return view('user.home', compact('products'));
+        //
     }
 
     /**
@@ -49,28 +45,21 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Cart $cart)
     {
-        $product = Product::find($id);
-        $images = DB::table('product_images')
-                ->join('products', 'products.id', '=', 'product_images.product_id')
-                ->select('product_images.image_name')
-                ->where('products.id', '=', $id)->get();
-        $sum_image = DB::table('product_images')->where('product_images.product_id', '=', $id)
-                            ->count('product_images.id');
-        return view('user.product_detail', compact('product', 'images', 'sum_image', 'id'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Cart $cart)
     {
         //
     }
@@ -79,10 +68,10 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Cart $cart)
     {
         //
     }
@@ -90,12 +79,11 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Cart  $cart
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Cart $cart)
     {
         //
     }
-
 }
