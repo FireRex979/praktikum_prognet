@@ -26,6 +26,7 @@ class ProductController extends Controller
         $categories = DB::table('categories')
                         ->join('product_category_details', 'categories.id', '=', 'product_category_details.category_id')
                         ->select('categories.*', 'product_category_details.*')
+                        ->where('product_category_details.deleted_at', '=', NULL)
                         ->get();
         return view('product.home',compact('products', 'categories'));
 	}

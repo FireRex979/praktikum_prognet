@@ -2,7 +2,7 @@
 @section('judul','User | Home Page')
 @section('content')
     <!-- ##### Breadcumb Area Start ##### -->
-    <div class="breadcumb_area bg-img" style="background-image: url(assets/user/img/bg-img/breadcumb.jpg);">
+    <div class="breadcumb_area bg-img" style="background-image: url(assets/user/img/bg-img/breadcumb.jpg); margin-top: 5%">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
@@ -25,64 +25,30 @@
                         <!-- ##### Single Widget ##### -->
                         <div class="widget catagory mb-50">
                             <!-- Widget Title -->
-                            <h6 class="widget-title mb-30">Kategori</h6>
+                            <h6 class="widget-title mb-30">Cari Berdasarkan Kategori</h6>
 
                             <!--  Catagories  -->
-                            <div class="catagories-menu">
-                                <ul id="menu-content2" class="menu-content collapse show">
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#clothing">
-                                        <a href="#">Anak-Anak</a>
-                                        <ul class="sub-menu collapse show" id="clothing">
-                                            <li><a href="#">All</a></li>
-                                            <li><a href="#">Bodysuits</a></li>
-                                            <li><a href="#">Dresses</a></li>
-                                            <li><a href="#">Hoodies &amp; Sweats</a></li>
-                                            <li><a href="#">Jackets &amp; Coats</a></li>
-                                            <li><a href="#">Jeans</a></li>
-                                            <li><a href="#">Pants &amp; Leggings</a></li>
-                                            <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                                            <li><a href="#">Shirts &amp; Blouses</a></li>
-                                            <li><a href="#">Shirts</a></li>
-                                            <li><a href="#">Sweaters &amp; Knits</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#shoes" class="collapsed">
-                                        <a href="#">Pria</a>
-                                        <ul class="sub-menu collapse" id="shoes">
-                                            <li><a href="#">All</a></li>
-                                            <li><a href="#">Bodysuits</a></li>
-                                            <li><a href="#">Dresses</a></li>
-                                            <li><a href="#">Hoodies &amp; Sweats</a></li>
-                                            <li><a href="#">Jackets &amp; Coats</a></li>
-                                            <li><a href="#">Jeans</a></li>
-                                            <li><a href="#">Pants &amp; Leggings</a></li>
-                                            <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                                            <li><a href="#">Shirts &amp; Blouses</a></li>
-                                            <li><a href="#">Shirts</a></li>
-                                            <li><a href="#">Sweaters &amp; Knits</a></li>
-                                        </ul>
-                                    </li>
-                                    <!-- Single Item -->
-                                    <li data-toggle="collapse" data-target="#accessories" class="collapsed">
-                                        <a href="#">Wanita</a>
-                                        <ul class="sub-menu collapse" id="accessories">
-                                            <li><a href="#">All</a></li>
-                                            <li><a href="#">Bodysuits</a></li>
-                                            <li><a href="#">Dresses</a></li>
-                                            <li><a href="#">Hoodies &amp; Sweats</a></li>
-                                            <li><a href="#">Jackets &amp; Coats</a></li>
-                                            <li><a href="#">Jeans</a></li>
-                                            <li><a href="#">Pants &amp; Leggings</a></li>
-                                            <li><a href="#">Rompers &amp; Jumpsuits</a></li>
-                                            <li><a href="#">Shirts &amp; Blouses</a></li>
-                                            <li><a href="#">Shirts</a></li>
-                                            <li><a href="#">Sweaters &amp; Knits</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
+                            
+                                <form action="/users/search/category" method="GET">
+                                    <div class="catagories-menu">
+                                        <select class="w-100 form-control" name="kind">
+                                            <option>--Pilih Jenis Produk--</option>
+                                            <option value="Anak-Anak">Anak-Anak</option>
+                                            <option value="Pria">Pria</option>
+                                            <option value="Wanita">Wanita</option>
+                                        </select>
+                                        <h4 style="color: white;">-------------------</h4>
+                                        <select class="w-100 form-control" name="category">
+                                            <option>--Pilih Category Produk--</option>
+                                            @foreach($categories as $category)
+                                                <option value="{{$category->id}}">{{$category->category_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <h4 style="color: white;">-------------------</h4>
+                                    <button type="submit" class="btn btn-info">Cari</button>
+                                </form>
+                            
                         </div>
                     </div>
                 </div>
@@ -115,7 +81,7 @@
 
                         <div class="row">
                         	@foreach($products as $product)
-                        	<?php if (isset($product->product_image)):?>
+                            
                             <!-- Single Product -->
                             <div class="col-12 col-sm-6 col-lg-4">
                             	
@@ -123,14 +89,20 @@
                                     <!-- Product Image -->
                                     
                                     <div class="product-img">
-                                    	@foreach($product->product_image as $image)
+                                    	@foreach($product_images as $image)
+                                        @if($image->product_id==$product->id)
                                         <img src="/image/product_image/{{$image->image_name}}" alt="">
                                         <!-- Product Badge -->
                                         @break
+                                        @endif
                             			@endforeach
-                                        <div class="product-badge offer-badge">
-                                            <span>-30%</span>
-                                        </div>
+                                        @foreach($discounts as $discount)
+                                            @if($product->id==$discount->id_product && $discount->end > @date())
+                                                <div class="product-badge offer-badge">
+                                                    <span>-{{$discount->percentage}}%</span>
+                                                </div>
+                                            @endif
+                                        @endforeach
                                         <!-- Favourite -->
                                         <div class="product-favourite">
                                             <a href="#" class="favme fa fa-heart"></a>
@@ -143,18 +115,25 @@
                                         	<p>Rating {{ $product->product_rate }}</p>
                                             <h6>{{ $product->product_name }}</h6>
                                         </a>
-                                        <p class="product-price">Rp.{{ $product->price }}</p>
+                                        @foreach($discounts as $discount)
+                                        <?php $harga = $product->price; ?>
+                                        @if($product->id==$discount->id_product && $discount->end > @date('Y-m-d'))
+                                        <?php                                     
+                                                    $harga = $product->price - ($product->price*$discount->percentage/100);
+                                             ?>
+                                             @break
+                                        @endif
+                                        @endforeach
+                                            <p class="product-price">Rp. {{ $harga }}</p>
                                         <!-- Hover Content -->
                                         <div class="hover-content">
-                                            <!-- Add to Cart -->
                                             <div class="add-to-cart-btn">
-                                                <a href="#" class="btn essence-btn">Add to Cart</a>
+                                                <button class="btn essence-btn"><a href="{{ route('users.show', $product->id) }}" style="color: white;">Cek Produk</a></button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <?php endif; ?>
                             @endforeach
 
                         </div>

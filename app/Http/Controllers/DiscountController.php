@@ -83,10 +83,12 @@ class DiscountController extends Controller
     {
         $discounts = DB::table('discounts')->select('discounts.*')->where('discounts.id_product', '=', $id)
                     ->where('discounts.deleted_at', '=', null)
-                    ->orderby('discounts.end', 'desc')->paginate(5);
+                    ->orderby('discounts.end', 'desc')->paginate(10);
+        $product = DB::table('products')->select('products.product_name')
+                    ->where('products.id', '=', $id)->get();
         $max_date = DB::table('discounts')->where('discounts.id_product', '=', $id)->max('discounts.end');
                     
-        return view('discount.home', compact('discounts', 'id', 'max_date'));
+        return view('discount.home', compact('discounts', 'id', 'max_date', 'product'));
     }
 
     /**
@@ -135,7 +137,7 @@ class DiscountController extends Controller
             'end' => $request->end,
         ];
         Discount::where('id', $id)->update($update);
-        return Redirect::to('discounts/'.$update->id_product);
+        return Redirect::to('discounts/'.$request->id_product);
     }
 
     /**

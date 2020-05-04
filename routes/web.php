@@ -73,6 +73,20 @@ Route::get('/discounts/add/{id}', 'DiscountController@add_discount');
 Route::group(['middleware'=>['auth','verified']], function(){
 //User
 Route::resource('users', 'UserController');
-
+Route::resource('carts', 'CartController');
+Route::post('/carts/add', 'CartController@store');
+Route::get('/carts/delete/{id}', 'CartController@delete');
+Route::post('/carts/update', 'CartController@update');
+Route::patch('/carts/checkout/{id}', 'CartController@checkout_status');
+Route::get('/carts/checkout/{id}', 'CartController@checkout_status');
+Route::get('/userscheckout', 'UserController@checkout');
+Route::resource('transactions', 'TransactionController');
+Route::get('/province/{id}/cities', 'TransactionController@getCities');
+Route::get('/destination/cost', 'TransactionController@getOngkir');
+Route::post('/carts/update', 'CartController@update');
+Route::post('/checkout/cancel/{id}', 'CartController@cancel_checkout');
+Route::get('/users/{id}/invoice', 'UserController@invoice');
+Route::get('/users/invoice/{id}', 'UserController@getInvoice');
+Route::get('/users/search/category', 'UserController@search_category');
 });
 

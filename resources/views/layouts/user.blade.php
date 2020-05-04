@@ -17,7 +17,9 @@
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="{{ asset('assets/user/css/core-style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/user/style.css') }}">
-
+     <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
 <body>
@@ -27,7 +29,7 @@
             <!-- Classy Menu -->
             <nav class="classy-navbar" id="essenceNav">
                 <!-- Logo -->
-                <a class="nav-brand" href="index.html"><img src="{{ asset('assets/user/img/core-img/logo.png') }}" alt=""></a>
+                <a class="nav-brand" href="/home"><img src="{{ asset('assets/user/img/core-img/logo.png') }}" alt=""></a>
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">
                     <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -41,51 +43,9 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                         <ul>
-                            <li><a href="#">Shop</a>
-                                <div class="megamenu">
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Women's Collection</li>
-                                        <li><a href="shop.html">Dresses</a></li>
-                                        <li><a href="shop.html">Blouses &amp; Shirts</a></li>
-                                        <li><a href="shop.html">T-shirts</a></li>
-                                        <li><a href="shop.html">Rompers</a></li>
-                                        <li><a href="shop.html">Bras &amp; Panties</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Men's Collection</li>
-                                        <li><a href="shop.html">T-Shirts</a></li>
-                                        <li><a href="shop.html">Polo</a></li>
-                                        <li><a href="shop.html">Shirts</a></li>
-                                        <li><a href="shop.html">Jackets</a></li>
-                                        <li><a href="shop.html">Trench</a></li>
-                                    </ul>
-                                    <ul class="single-mega cn-col-4">
-                                        <li class="title">Kid's Collection</li>
-                                        <li><a href="shop.html">Dresses</a></li>
-                                        <li><a href="shop.html">Shirts</a></li>
-                                        <li><a href="shop.html">T-shirts</a></li>
-                                        <li><a href="shop.html">Jackets</a></li>
-                                        <li><a href="shop.html">Trench</a></li>
-                                    </ul>
-                                    <div class="single-mega cn-col-4">
-                                        <img src="{{ asset('assets/user/img/bg-img/bg-6.jpg') }}" alt="">
-                                    </div>
-                                </div>
-                            </li>
-                            <li><a href="#">Pages</a>
-                                <ul class="dropdown">
-                                    <li><a href="index.html">Home</a></li>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="single-product-details.html">Product Details</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="blog.html">Blog</a></li>
-                                    <li><a href="single-blog.html">Single Blog</a></li>
-                                    <li><a href="regular-page.html">Regular Page</a></li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="blog.html">Blog</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="{{route('transactions.show', Auth::user()->id)}}">Check Out</a></li>
+                            <li><a href="/users/{{Auth::user()->id}}/invoice">Invoice</a></li>
+                            <li><a href="blog.html">Pesan</a></li>
                         </ul>
                     </div>
                     <!-- Nav End -->
@@ -120,109 +80,59 @@
                 </div>
                 <!-- Cart Area -->
                 <div class="cart-area">
-                    <a href="#" id="essenceCartBtn"><img src="{{ asset('assets/user/img/core-img/bag.svg') }}" alt=""> <span>3</span></a>
+                    <a href="{{ route('carts.show', Auth::user()->id) }}" ><img src="{{ asset('assets/user/img/core-img/bag.svg') }}" alt=""></a>
                 </div>
             </div>
 
         </div>
     </header>
     <!-- ##### Header Area End ##### -->
-    <!-- ##### Right Side Cart Area ##### -->
-    <div class="cart-bg-overlay"></div>
-
-    <div class="right-side-cart-area">
-
-        <!-- Cart Button -->
-        <div class="cart-button">
-            <a href="#" id="rightSideCart"><img src="{{ asset('assets/user/img/core-img/bag.svg') }}" alt=""> <span>3</span></a>
-        </div>
-
-        <div class="cart-content d-flex">
-
-            <!-- Cart List Area -->
-            <div class="cart-list">
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="{{ asset('assets/user/img/product-img/product-1.jpg') }}" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-2.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Single Cart Item -->
-                <div class="single-cart-item">
-                    <a href="#" class="product-image">
-                        <img src="img/product-img/product-3.jpg" class="cart-thumb" alt="">
-                        <!-- Cart Item Desc -->
-                        <div class="cart-item-desc">
-                          <span class="product-remove"><i class="fa fa-close" aria-hidden="true"></i></span>
-                            <span class="badge">Mango</span>
-                            <h6>Button Through Strap Mini Dress</h6>
-                            <p class="size">Size: S</p>
-                            <p class="color">Color: Red</p>
-                            <p class="price">$45.00</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Cart Summary -->
-            <div class="cart-amount-summary">
-
-                <h2>Summary</h2>
-                <ul class="summary-table">
-                    <li><span>subtotal:</span> <span>$274.00</span></li>
-                    <li><span>delivery:</span> <span>Free</span></li>
-                    <li><span>discount:</span> <span>-15%</span></li>
-                    <li><span>total:</span> <span>$232.00</span></li>
-                </ul>
-                <div class="checkout-btn mt-100">
-                    <a href="checkout.html" class="btn essence-btn">check out</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- ##### Right Side Cart End ##### -->
     @yield('content')
    
-
+   
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- jQuery (Necessary for All JavaScript Plugins) -->
-    <script src="{{ asset('assets/user/js/jquery/jquery-2.2.4.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/user/js/jquery/jquery-2.2.4.min.js') }}"></script>
     <!-- Popper js -->
-    <script src="{{ asset('assets/user/js/popper.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/user/js/popper.min.js') }}"></script>
     <!-- Bootstrap js -->
-    <script src="{{ asset('assets/user/js/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/user/js/bootstrap.min.js') }}"></script>
     <!-- Plugins js -->
-    <script src="{{ asset('assets/user/js/plugins.js') }}"></script>
+    <script src="{{ URL::asset('assets/user/js/plugins.js') }}"></script>
     <!-- Classy Nav js -->
-    <script src="{{ asset('assets/user/js/classy-nav.min.js') }}"></script>
+    <script src="{{ URL::asset('assets/user/js/classy-nav.min.js') }}"></script>
     <!-- Active js -->
-    <script src="{{ asset('assets/user/js/active.js') }}"></script>
+    <script src="{{ URL::asset('assets/user/js/active.js') }}"></script>
+    <script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $(".btn-submit").click(function(e){
+
+        e.preventDefault();
+
+        var product_id = $("input[name=product_id]").val();
+        var user_id = $("input[name=user_id]").val();
+        var qty = $("input[name=qty]").val();
+        var url = '{{ route('carts.store') }}';
+
+        $.ajax({
+           url:url,
+           method:'POST',
+           data:{
+                  product_id:product_id, 
+                  user_id:user_id,
+                  qty:qty
+                },
+           success:function(response){
+              alert(response.notif);
+           },
+        });
+    });
+</script>
 
 </body>
-
 </html>

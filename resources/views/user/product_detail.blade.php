@@ -19,28 +19,34 @@
             </div>
             @endif
         </div>
-
+        <?php 
+            $price = $product->price;
+            $diskon = 0;
+            if (isset($discount)) {
+                $diskon = $discount->percentage;
+                $price = $price - ($price*$diskon/100);
+            }
+         ?>
         <!-- Single Product Description -->
-        <div class="single_product_desc clearfix">
-            <a href="#">
-                <h2>{{ $product->product_name }}</h2>
-            </a>
-            <p class="product-price">Rp. {{ $product->price }}</p>
-            <p class="product-desc">{{ $product->description }}.</p>
-
-            <!-- Form -->
-            <form class="cart-form clearfix" method="post">
-                <!-- Cart & Favourite Box -->
-                <div class="cart-fav-box d-flex align-items-center">
-                    <!-- Cart -->
-                    <button type="submit" name="addtocart" value="5" class="btn essence-btn">Add to cart</button>
-                    <!-- Favourite -->
-                    <div class="product-favourite ml-4">
-                        <a href="#" class="favme fa fa-heart"></a>
+        <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
+            <div class="order-details-confirmation">
+                <div class="cart-page-heading">
+                    <h5>Detail Produk</h5>
+                    </div>
+                    <form class="btn-submit" method="POST">
+                        <input type="hidden" name="product_id" value="{{$product->id}}" id="product_id">
+                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}" id="user_id">
+                        <ul class="order-details-form mb-4">
+                            <li><span>Nama Produk</span> <span>{{$product->product_name}}</span></li>
+                            <li><span>Deskripsi</span> <span>{{$product->description}}</span></li>
+                            <li><span>Diskon</span> <span>{{$diskon}}%</span></li>
+                            <li><span>Harga Satuan</span> <span>Rp. {{$price}}</span></li>
+                            <input id="qty" type="hidden" name="qty" value="1" class="form-control" style="width: 20%;">
+                        </ul>
+                        <button class="btn essence-btn">Add to Cart</button>
+                    </form>
                     </div>
                 </div>
-            </form>
-        </div>
     </section>
     <!-- ##### Single Product Details Area End ##### -->
 
@@ -108,4 +114,15 @@
                     </div>
                 </div>
             </div>
+<script>
+    $(document).ready(function(){
+      var total = 0;
+      $('#qty').keyup(function(){
+          var qty = $('#qty').val();
+          var price = $('#price').val();
+          total = qty * price;
+      $('#sub-total').html(total);
+      });
+    });
+</script>
 @endsection

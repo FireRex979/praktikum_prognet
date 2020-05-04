@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0dcbdc80776ca79d6311b8f92c5a4b5",
+    "content-hash": "6144783c4c086b636a9c44dc1e0ae47a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -728,6 +728,7 @@
                     "email": "jakub.onderka@gmail.com"
                 }
             ],
+            "abandoned": "php-parallel-lint/php-console-color",
             "time": "2018-09-29T17:23:10+00:00"
         },
         {
@@ -774,7 +775,68 @@
                 }
             ],
             "description": "Highlight PHP code in terminal",
+            "abandoned": "php-parallel-lint/php-console-highlighter",
             "time": "2018-09-29T18:48:56+00:00"
+        },
+        {
+            "name": "kavist/rajaongkir",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kavist/rajaongkir.git",
+                "reference": "6d337b07943f6e621e39b4204133102bfa0e28c4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kavist/rajaongkir/zipball/6d337b07943f6e621e39b4204133102bfa0e28c4",
+                "reference": "6d337b07943f6e621e39b4204133102bfa0e28c4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "codedungeon/phpunit-result-printer": "^0.26.2",
+                "fzaninotto/faker": "^1.8",
+                "mockery/mockery": "^1.2",
+                "orchestra/testbench": "^4.1",
+                "phpunit/phpunit": "^8.0",
+                "spatie/phpunit-watcher": "^1.12"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Kavist\\RajaOngkir\\Providers\\LaravelServiceProvider"
+                    ],
+                    "aliases": {
+                        "RajaOngkir": "Kavist\\RajaOngkir\\Facades\\RajaOngkir"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kavist\\RajaOngkir\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ian Mustafa",
+                    "email": "mail@ianmustafa.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "Klien API PHP untuk RajaOngkir",
+            "homepage": "https://github.com/kavist/rajaongkir",
+            "keywords": [
+                "laravel",
+                "rajaongkir"
+            ],
+            "time": "2019-10-07T13:45:42+00:00"
         },
         {
             "name": "laravel/framework",

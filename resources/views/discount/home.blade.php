@@ -4,8 +4,8 @@
     <div class="col-lg-11 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">List Diskon Produk</h4>
-                  <?php if ($max_date < date('Y-m-d')&& is_null($max_date)):?>
+                  <h4 class="card-title">List Diskon @foreach($product as $products){{ $products->product_name }}@endforeach</h4>
+                  <?php if ($max_date < date('Y-m-d')|| is_null($max_date)):?>
                     <span>
                   <button type="button" class="btn-sm btn-success btn-icon-text" onclick="">
                       <i class="mdi mdi-upload btn-icon-prepend"></i>     

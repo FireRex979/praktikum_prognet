@@ -13,6 +13,7 @@
     <!-- End plugin css for this page -->
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
 </head>
 <body class="index">
