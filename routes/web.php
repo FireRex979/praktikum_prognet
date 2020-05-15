@@ -27,8 +27,13 @@ Route::prefix('admin')->group(function(){
     Route::post('/login', 'Auth\AdminLoginController@login')->middleware('guest')->name('admin.login.submit');
     Route::get('/', 'AdminController@index')->name('admin.dashboard')->middleware('authAdmin:admin');
     Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+    Route::get('/order/new', 'AdminController@orderNew');
+    Route::get('/order/process', 'AdminController@orderProces');
+    Route::get('/order/success', 'AdminController@orderSuccess');
+    Route::get('/order/cek/{id}', 'AdminController@orderDetail');
+    Route::get('/order/cancel', 'AdminController@orderCancel');
 });
-
+Route::patch('/order/update/{id}', 'AdminController@orderUpdate');
 
 Route::group(['middleware'=>['authAdmin:admin']],function(){
 //Product
@@ -45,6 +50,7 @@ Route::resource('product_images','ProductImageController');
 Route::get('/category_detail/delete/{id}', 'ProductController@soft_delete_category');
 Route::get('/category_detail/create/{id}', 'ProductController@add_category');
 Route::post('/category_detail/store', 'ProductController@store_category');
+Route::resource('response', 'ResponseController');
 
 //Courier
 Route::resource('couriers', 'CourierController');
@@ -88,5 +94,10 @@ Route::post('/checkout/cancel/{id}', 'CartController@cancel_checkout');
 Route::get('/users/{id}/invoice', 'UserController@invoice');
 Route::get('/users/invoice/{id}', 'UserController@getInvoice');
 Route::get('/users/search/category', 'UserController@search_category');
+Route::patch('/uploadPOP/{id}', 'UserController@uploadPOP');
+Route::get('/users/search/name','UserController@search');
+Route::patch('/transaction/success/{id}', 'UserController@confirmation');
+Route::resource('reviews', 'ReviewController');
+Route::patch('/transactions/cancel/{id}', 'UserController@cancel_transaction');
 });
 

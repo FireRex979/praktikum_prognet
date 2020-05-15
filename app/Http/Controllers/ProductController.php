@@ -86,7 +86,11 @@ class ProductController extends Controller
             ->join('products', 'products.id', '=', 'product_category_details.product_id')
             ->select('categories.category_name', 'product_category_details.*')
             ->where('products.id', '=', $id)->where('product_category_details.deleted_at', '=', NULL)->get();
-        return view('product.show', compact('products', 'image', 'categories', 'id'));
+        $reviews = DB::table('product_reviews')->join('users', 'users.id', '=', 'product_reviews.user_id')
+                ->select('product_reviews.*', 'users.name')->where('product_reviews.product_id', '=',$id)
+                ->orderby('product_reviews.id', 'desc')->get();
+        $responses = DB::table('response')->select('response.*')->get();
+        return view('product.show', compact('products', 'image', 'categories', 'id', 'reviews', 'responses'));
     }
 
     public function edit($id){

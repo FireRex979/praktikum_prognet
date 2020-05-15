@@ -18,8 +18,51 @@
             <?php $qty = 0; ?>
             <?php $weight = 0; ?>
             @foreach($products as $product)
+            <!-- Modal -->
+            <div class="modal fade" id="review-{{$product->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Review Produk</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="{{route('reviews.store')}}" method="POST">
+                      @csrf
+                      <div class="form-group">
+                        <label>Produk</label>
+                        <input type="text" name="" value="{{$product->product_name}}" readonly="" class="form-control">
+                      </div>
+                      <div class="form-group">
+                        <label>Review</label>
+                        <input type="text" name="content" class="form-control" style="width: 80%; margin-right: 20px;" placeholder="review produk">
+                        <input type="hidden" name="product_id" value="{{$product->product_id}}">
+                        <input type="hidden" name="transaction_id" value="{{$transaction->id}}">
+                      </div>
+                      <label>Rating</label>
+                      <div class="form-group">
+                        <select name="rate">
+                          <option value="0">0</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                        </select>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Kirim</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="row">
-    		<div class="col-12 col-md-6 col-lg-12 ml-lg-center">
+    		        <div class="col-12 col-md-6 col-lg-12 ml-lg-center">
                     <div class="order-details-confirmation">
                         <div class="cart-page-heading">
                             <h5>Produk {{$loop->iteration}}</h5>
@@ -40,9 +83,31 @@
                             ?>
                             <li><span>Sub Total</span> <span>Rp. {{$subtotal}}</span></li>
                         </ul>
+                        <?php 
+                            $cek_review = 0;
+                            foreach ($reviews as $review) {
+                              if ($product->product_id == $review->product_id) {
+                                $cek_review=$cek_review+1;
+                              }
+                            }
+                         ?>
+                        @if($transaction->status == 'success')
+                            @if($cek_review == 0)
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#review-{{$product->id}}">Review Barang</button>
+                            @else
+                              <p>Review Telah dilakukan</p>
+                            @endif
+                        @endif
+                        @if ($message = Session::get('success'))
+                        <div class="alert alert-success alert-block">
+                          <button type="button" class="close" data-dismiss="alert">×</button> 
+                          <strong>{{ $message }}</strong>
+                        </div>
+                        @endif
                     </div>
                     <br>
                     @endforeach
+                    @if($transaction->status == 'unverified')
                     <div class="breadcumb_area bg-img" style="background-image: url(assets/user/img/bg-img/breadcumb.jpg);">
                         <div class="container h-100">
                             <div class="row h-100 align-items-center">
@@ -56,6 +121,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="order-details-confirmation">
                         <div class="cart-page-heading">
                             <h5>Pembayaran</h5>
@@ -71,12 +137,37 @@
                             <li><span>Berat Total</span> <span>{{$weight}} gram</span></li>
                             <li><span>Total</span> <span>Rp. {{$total+$transaction->shipping_cost}}</span></li>
                         </ul>
-                        <label>Upload Bukti Pembayaran</label>
+                        
+                        @if ($message = Session::get('notif'))
+                        <div class="alert alert-danger alert-block">
+                          <button type="button" class="close" data-dismiss="alert">×</button> 
+                          <strong>{{ $message }}</strong>
+                        </div>
+                        @endif
                         <br>
                         @if($transaction->status=='unverified')
-                            <input type="file" name="prof_of_payment" class="form-control">
+                        <label>Upload Bukti Pembayaran</label>
+                          <form action="/uploadPOP/{{$transaction->id}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
+                            <input type="file" name="proof_of_payment" class="form-control">
                             <br>
-                            <button class="btn btn-success">Upload</button>
+                            <button type="submit" class="btn btn-success">Upload</button>
+                          </form>
+                          <form action="/transactions/cancel/{{$transaction->id}}" method="post">
+                            @csrf
+                            @method('PATCH')
+                            <br>
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin membatalkan transaksi?')">Batalkan Transaksi</button>
+                          </form>
+                        @elseif($transaction->status == 'delivered')
+                          <label>Barang Sudah Sampai?</label>
+                          <form action="/transaction/success/{{$transaction->id}}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
+                            <br>
+                            <button type="submit" class="btn btn-success" onclick="return confirm('Apakah Barang Sudah Sampai?')">Konfirmasi</button>
+                          </form>
                         @else
                             <label style="margin-top: 20px; color: red;">Tidak Dapat Mengupload Bukti</label>
                         @endif

@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
          $schedule->call(function () {
-            DB::table('transactions')->whereDate('timeout', '<', date('Y-m-d I:m:s'))->update(['status'=>'canceled']);
+            DB::table('transactions')->whereDate('timeout', '<', date('Y-m-d I:m:s'))->update(['status'=>'expired']);
         })->everyMinute();
     }
 

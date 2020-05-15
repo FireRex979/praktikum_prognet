@@ -7,7 +7,7 @@
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="page-title text-center">
-                        <h2>Semua</h2>
+                        <h2>{{$title}}</h2>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                                         </select>
                                     </div>
                                     <h4 style="color: white;">-------------------</h4>
-                                    <button type="submit" class="btn btn-info">Cari</button>
+                                    <button type="submit" class="btn btn-info btn-lg">Cari</button>
                                 </form>
                             
                         </div>
@@ -60,7 +60,7 @@
                                 <div class="product-topbar d-flex align-items-center justify-content-between">
                                     <!-- Total Products -->
                                     <div class="total-products">
-                                        <p><span>186</span> products found</p>
+                                        <p><span>{{$count_product}}</span> Produk Ditemukan</p>
                                     </div>
                                     <!-- Sorting -->
                                     <div class="product-sorting d-flex">
@@ -85,7 +85,7 @@
                             <!-- Single Product -->
                             <div class="col-12 col-sm-6 col-lg-4">
                             	
-                                <div class="single-product-wrapper">
+                                <div class="single-product-wrapper" id="product_template">
                                     <!-- Product Image -->
                                     
                                     <div class="product-img">
@@ -115,16 +115,17 @@
                                         	<p>Rating {{ $product->product_rate }}</p>
                                             <h6>{{ $product->product_name }}</h6>
                                         </a>
-                                        @foreach($discounts as $discount)
                                         <?php $harga = $product->price; ?>
+                                        @foreach($discounts as $discount)
+                                        
                                         @if($product->id==$discount->id_product && $discount->end > @date('Y-m-d'))
-                                        <?php                                     
+                                            <?php                                     
                                                     $harga = $product->price - ($product->price*$discount->percentage/100);
                                              ?>
                                              @break
                                         @endif
                                         @endforeach
-                                            <p class="product-price">Rp. {{ $harga }}</p>
+                                            <p class="product-price">Rp. {{$harga}}</p>
                                         <!-- Hover Content -->
                                         <div class="hover-content">
                                             <div class="add-to-cart-btn">
@@ -213,4 +214,5 @@
                     </div>
                 </div>
             </div>
+
 @endsection

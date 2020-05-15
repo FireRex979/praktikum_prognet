@@ -1,6 +1,51 @@
 @extends('layouts.user')
 @section('judul','User | Detail Produk Page')
 @section('content')
+<!-- Modal -->
+<div class="modal fade" id="review" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Review Produk</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+        @foreach($reviews as $review)
+            <div class="row" style="margin-bottom: : 10px; margin-top: 10px;">
+                <div class="col-md-6">
+                    <div style="background-color: #ddd4bd; padding: 5px 15px; border-radius: 10px;">
+                        <p style="margin: 0; font-size: 10px;">{{$review->name}}</p>
+                        <p style="margin: 0; color: black;">{{$review->content}}</p>                        
+                    </div>
+                </div>
+            </div>
+            @foreach($response as $item)
+                @if($review->id == $item->review_id)
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-6 ml-auto">
+                        <div style="background-color: #7ed957; padding: 5px 15px; border-radius: 10px;">
+                            <p style="margin: 0; font-size: 10px;">{{$review->name}}</p>
+                            <p style="margin: 0;">{{$review->content}}</p> 
+                            <hr>
+                            <p style="margin: 0; font-size: 10px;">{{$item->name}}</p>
+                            <p style="margin: 0; color: black;">{{$item->content}}</p>                        
+                        </div>
+                    </div>
+                </div>
+                @endif
+            @endforeach
+        @endforeach
+        </div>
+      </div>
+      <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <section class="single_product_details_area d-flex align-items-center">
 
         <!-- Single Product Thumb -->
@@ -43,8 +88,11 @@
                             <li><span>Harga Satuan</span> <span>Rp. {{$price}}</span></li>
                             <input id="qty" type="hidden" name="qty" value="1" class="form-control" style="width: 20%;">
                         </ul>
-                        <button class="btn essence-btn">Add to Cart</button>
+                        <button class="btn btn-success btn-lg">Add to Cart</button>
                     </form>
+                        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#review" style="margin-top: 25px;">
+                          Lihat Review
+                        </button>
                     </div>
                 </div>
     </section>
@@ -114,6 +162,7 @@
                     </div>
                 </div>
             </div>
+
 <script>
     $(document).ready(function(){
       var total = 0;

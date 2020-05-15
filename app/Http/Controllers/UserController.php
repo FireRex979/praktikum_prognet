@@ -10,7 +10,7 @@ use App\Cart;
 use App\Discount;
 use DB;
 use Auth;
-
+use App\Transaction;
 class UserController extends Controller
 {
     public function __construct()
@@ -25,7 +25,8 @@ class UserController extends Controller
     public function index()
     {
         $products = DB::table('products')->orderby('products.id', 'desc')->paginate(9);
-        $count_carts = Cart::where('user_id', '=', Auth::user()->id)->where('carts.status', '=', 'notyet')->count('id');
+        $title = "HOME";
+        $count_product = DB::table('products')->where('products.deleted_at', '=', NULL)->count('products.id');
         $product_carts = DB::table('carts')
                     ->join('products', 'products.id', '=', 'carts.product_id')
                     ->join('users', 'users.id', '=', 'carts.user_id')
@@ -35,7 +36,7 @@ class UserController extends Controller
         $product_images = DB::table('product_images')->select('product_images.*')->get();
         $categories = DB::table('categories')->select('categories.*')->get();
         $discounts = Discount::where('discounts.end', '>', date('Y-m-d'))->get();
-        return view('user.home', compact('products', 'count_carts', 'product_carts', 'product_images', 'categories', 'discounts'));
+        return view('user.home', compact('products', 'product_carts', 'product_images', 'categories', 'discounts', 'title', 'count_product'));
     }
 
     /**
@@ -74,7 +75,6 @@ class UserController extends Controller
                 ->where('products.id', '=', $id)->get();
         $sum_image = DB::table('product_images')->where('product_images.product_id', '=', $id)
                             ->count('product_images.id');
-        $count_carts = Cart::where('user_id', '=', Auth::user()->id)->where('carts.status', '=', 'notyet')->count('id');
         $product_carts = DB::table('carts')
                     ->join('products', 'products.id', '=', 'carts.product_id')
                     ->join('users', 'users.id', '=', 'carts.user_id')
@@ -84,7 +84,16 @@ class UserController extends Controller
         $image_carts = DB::table('product_images')->select('product_images.*')->get();
         $categories = DB::table('categories')->select('categories.*')->get();
         $discount = Discount::where('id_product', '=', $id)->orderby('end', 'desc')->first();
-        return view('user.product_detail', compact('product', 'images', 'sum_image', 'id', 'count_carts', 'product_carts', 'image_carts', 'categories', 'discount'));
+
+        $reviews = DB::table('product_reviews')->join('products', 'products.id', '=', 'product_reviews.product_id')
+                ->join('users', 'users.id', '=', 'product_reviews.user_id')
+                ->select('product_reviews.*', 'users.name')
+                ->where('products.id', '=', $id)->orderby('product_reviews.id', 'desc')->get();
+        $response = DB::table('response')->join('product_reviews', 'product_reviews.id', '=', 'response.review_id')
+                ->join('admins', 'admins.id', '=', 'response.admin_id')
+                ->select('admins.name', 'response.*')->get();
+
+        return view('user.product_detail', compact('product', 'images', 'sum_image', 'id', 'product_carts', 'image_carts', 'categories', 'discount','reviews', 'response'));
     }
 
     /**
@@ -132,13 +141,15 @@ class UserController extends Controller
         $products = DB::table('transaction_details')->join('products', 'products.id', '=', 'transaction_details.product_id')
                     ->select('transaction_details.*', 'products.weight', 'products.product_name')
                     ->where('transaction_details.transaction_id', '=', $transaction->id)->get();
-        return view('user.invoice_detail', compact('transaction', 'products'));
+        $reviews = DB::table('product_reviews')->select('product_reviews.*')->where('product_reviews.transaction_id', '=', $id)->get();
+        return view('user.invoice_detail', compact('transaction', 'products', 'reviews'));
     }
 
     public function search_category(Request $request){
         $product_images = DB::table('product_images')->select('product_images.*')->get();
         $categories = DB::table('categories')->select('categories.*')->get();
         $discounts = Discount::where('discounts.end', '>', date('Y-m-d'))->get();
+        $title = "HASIL PENCARIAN";
         $products = DB::table('products')
                     ->join('product_category_details', 'products.id', 'product_category_details.product_id')
                     ->join('categories', 'categories.id', 'product_category_details.category_id')
@@ -146,6 +157,50 @@ class UserController extends Controller
                     ->where('categories.id', '=', $request->category)
                     ->where('product_category_details.deleted_at', '=', NULL)
                     ->orderby('products.id', 'desc')->paginate(9);
-        return view('user.searching_tag', compact('products', 'product_images', 'categories', 'discounts'));
+        $count_product = DB::table('products')
+                    ->join('product_category_details', 'products.id', 'product_category_details.product_id')
+                    ->join('categories', 'categories.id', 'product_category_details.category_id')
+                    ->where('categories.id', '=', $request->category)
+                    ->where('product_category_details.deleted_at', '=', NULL)
+                    ->count('products.id');
+        return view('user.home', compact('products', 'product_images', 'categories', 'discounts', 'title', 'count_product'));
+    }
+
+    public function uploadPOP(Request $request, $id){
+        $image = $request->proof_of_payment;
+        $nama_image = time()."_".$image->getClientOriginalName();
+        $folder = 'image/proof_of_payment';
+        $image->move($folder,$nama_image);
+        $transaction = Transaction::find($id);
+        $transaction->proof_of_payment = $nama_image;
+        $transaction->save();
+        return redirect()->back()->with(['notif' => "Bukti Pembayaran telah Diupload"]);
+    }
+
+    public function search(Request $request){
+        $product_images = DB::table('product_images')->select('product_images.*')->get();
+        $categories = DB::table('categories')->select('categories.*')->get();
+        $discounts = Discount::where('discounts.end', '>', date('Y-m-d'))->get();
+        $title = "HASIL PENCARIAN";
+        $products = DB::table('products')
+                        ->select('products.*')
+                        ->where('products.product_name', 'LIKE', '%'.$request->search.'%')
+                        ->orderby('products.id', 'desc')->paginate(9);
+        $count_product = DB::table('products')->where('products.product_name', 'LIKE', '%'.$request->search.'%')->count('products.id');
+        return view('user.home', compact('products', 'product_images', 'categories', 'discounts', 'title', 'count_product'));
+    }
+
+    public function confirmation($id){
+        $transaction = Transaction::find($id);
+        $transaction->status = "success";
+        $transaction->save();
+        return redirect()->back()->with(['notif' => "Terima Kasih Telah Berbelanja"]);
+    }
+
+    public function cancel_transaction($id){
+        $transaction = Transaction::find($id);
+        $transaction->status = "canceled";
+        $transaction->save();
+        return redirect()->back()->with(['notif' => "Transaksi telah dibatalkan"]);
     }
 }

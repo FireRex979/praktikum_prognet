@@ -90,44 +90,45 @@
               <span class="count"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifications</p>
-              <a class="dropdown-item">
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Cek Pesanan</p>
+              <a class="dropdown-item" href="new">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-success">
-                    <i class="mdi mdi-information mx-0"></i>
+                    <i class="mdi mdi-new-box mx-0"></i>
                   </div>
                 </div>
                 <div class="item-content">
-                  <h6 class="font-weight-normal">Application Error</h6>
-                  <p class="font-weight-light small-text mb-0 text-muted">
-                    Just now
-                  </p>
+                  <h6 class="font-weight-normal">Pesanan Baru</h6>
                 </div>
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="process">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-warning">
-                    <i class="mdi mdi-settings mx-0"></i>
+                    <i class="mdi mdi-truck mx-0"></i>
                   </div>
                 </div>
                 <div class="item-content">
-                  <h6 class="font-weight-normal">Settings</h6>
-                  <p class="font-weight-light small-text mb-0 text-muted">
-                    Private message
-                  </p>
+                  <h6 class="font-weight-normal">Pesanan Diproses</h6>
                 </div>
               </a>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="success">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-info">
-                    <i class="mdi mdi-account-box mx-0"></i>
+                    <i class="mdi mdi-checkbox-marked-circle-outline mx-0"></i>
                   </div>
                 </div>
                 <div class="item-content">
-                  <h6 class="font-weight-normal">New user registration</h6>
-                  <p class="font-weight-light small-text mb-0 text-muted">
-                    2 days ago
-                  </p>
+                  <h6 class="font-weight-normal">Pesanan Sampai</h6>
+                </div>
+              </a>
+              <a class="dropdown-item" href="cancel">
+                <div class="item-thumbnail">
+                  <div class="item-icon bg-danger">
+                    <i class="mdi mdi-block-helper mx-0"></i>
+                  </div>
+                </div>
+                <div class="item-content">
+                  <h6 class="font-weight-normal">Pesanan Dibatalkan</h6>
                 </div>
               </a>
             </div>
