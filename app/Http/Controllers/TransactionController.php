@@ -162,4 +162,19 @@ class TransactionController extends Controller
     {
         //
     }
+
+    public function checkout_no_cart(Request $request, $id){
+        $product = Product::find($id);
+        if ($product->stock < $request->qty) {
+            return redirect()->back()->with(['notif'=>"Stock tidak mencukupi"]);
+        }else{
+            $cart = new Cart;
+            $cart->product_id = $id;
+            $cart->qty = $request->qty;
+            $cart->user_id = Auth::user()->id;
+            $cart->status = "checkedout";
+            $cart->save();
+            return redirect('transactions/'.Auth::user()->id);
+        }
+    }
 }

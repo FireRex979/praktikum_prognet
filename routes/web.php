@@ -99,5 +99,6 @@ Route::get('/users/search/name','UserController@search');
 Route::patch('/transaction/success/{id}', 'UserController@confirmation');
 Route::resource('reviews', 'ReviewController');
 Route::patch('/transactions/cancel/{id}', 'UserController@cancel_transaction');
+Route::post('/users/checkout/{id}', 'TransactionController@checkout_no_cart');
 });
 

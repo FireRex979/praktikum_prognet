@@ -162,6 +162,7 @@ class UserController extends Controller
                     ->join('categories', 'categories.id', 'product_category_details.category_id')
                     ->where('categories.id', '=', $request->category)
                     ->where('product_category_details.deleted_at', '=', NULL)
+                    ->where('products.deleted_at', '=', NULL)
                     ->count('products.id');
         return view('user.home', compact('products', 'product_images', 'categories', 'discounts', 'title', 'count_product'));
     }
@@ -186,7 +187,7 @@ class UserController extends Controller
                         ->select('products.*')
                         ->where('products.product_name', 'LIKE', '%'.$request->search.'%')
                         ->orderby('products.id', 'desc')->paginate(9);
-        $count_product = DB::table('products')->where('products.product_name', 'LIKE', '%'.$request->search.'%')->count('products.id');
+        $count_product = DB::table('products')->where('products.product_name', 'LIKE', '%'.$request->search.'%')->where('deleted_at', '=', NULL)->count('products.id');
         return view('user.home', compact('products', 'product_images', 'categories', 'discounts', 'title', 'count_product'));
     }
 

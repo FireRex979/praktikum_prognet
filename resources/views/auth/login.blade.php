@@ -1,73 +1,85 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+    <!-- Title  -->
+    <title>Login Page</title>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+    <!-- Favicon  -->
+    <link rel="icon" href="{{ asset('assets/user/img/core-img/favicon.ico') }}">
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+    <!-- Core Style CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/user/css/core-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/user/style.css') }}">
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+</head>
 
+<body>
+<center>
+    <!-- ##### Checkout Area Start ##### -->
+    <div class="checkout_area section-padding-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-5 ml-lg" style="margin-left: 30%;">
+                    <div class="order-details-confirmation">
+                        <form action="{{ route('login') }}" method="POST">
+                            @csrf
+                            <div class="cart-page-heading">
+                                <h5>LOGIN</h5>
+                                <p>Silahkan Login Terlebih Dahulu</p>
+                            </div>
+
+                            <ul class="order-details-form mb-4">
+                                <input type="email" class="form-control" placeholder="E-Mail" name="email" style="font-size: 13px;">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
+                                <br>
+                                <input type="Password" class="form-control" placeholder="Password" name="password" style="font-size: 13px;">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                                <br>
+                                <a href="{{ route('register') }}">Belum Punya akun?</a>
+                            </ul>
+                            <button class="btn btn-primary btn-lg" style="width: 80px;" type="submit">LOGIN</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endsection
+   
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- jQuery (Necessary for All JavaScript Plugins) -->
+    <script src="{{ URL::asset('assets/user/js/jquery/jquery-2.2.4.min.js') }}"></script>
+    <!-- Popper js -->
+    <script src="{{ URL::asset('assets/user/js/popper.min.js') }}"></script>
+    <!-- Bootstrap js -->
+    <script src="{{ URL::asset('assets/user/js/bootstrap.min.js') }}"></script>
+    <!-- Plugins js -->
+    <script src="{{ URL::asset('assets/user/js/plugins.js') }}"></script>
+    <!-- Classy Nav js -->
+    <script src="{{ URL::asset('assets/user/js/classy-nav.min.js') }}"></script>
+    <!-- Active js -->
+    <script src="{{ URL::asset('assets/user/js/active.js') }}"></script>
+</center>
+</body>
+</html>

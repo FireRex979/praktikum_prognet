@@ -46,8 +46,37 @@
     </div>
   </div>
 </div>
+ <!-- Modal -->
+            <div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Review Produk</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <form action="/users/checkout/{{$product->id}}" method="POST">
+                      @csrf
+                      <div class="form-group">
+                        <label>Produk</label>
+                        <input type="text" name="" value="{{$product->product_name}}" readonly="" class="form-control">
+                      </div>
+                      <div class="form-group">
+                        <label>Jumlah</label>
+                        <input type="text" name="qty" value="1" class="form-control" min="1">
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Checkout</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
 <section class="single_product_details_area d-flex align-items-center">
-
         <!-- Single Product Thumb -->
         <div class="single_product_thumb clearfix">
         	@if($sum_image > 1)
@@ -74,6 +103,12 @@
          ?>
         <!-- Single Product Description -->
         <div class="col-12 col-md-6 col-lg-5 ml-lg-auto">
+            @if ($message = Session::get('notif'))
+              <div class="alert alert-danger alert-block">
+                <button type="button" class="close" data-dismiss="alert">×</button> 
+                <strong>{{ $message }}</strong>
+              </div>
+            @endif
             <div class="order-details-confirmation">
                 <div class="cart-page-heading">
                     <h5>Detail Produk</h5>
@@ -92,6 +127,9 @@
                     </form>
                         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#review" style="margin-top: 25px;">
                           Lihat Review
+                        </button>
+                        <button type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#checkout" style="margin-top: 25px;">
+                          Checkout
                         </button>
                     </div>
                 </div>

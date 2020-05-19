@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Transaction;
+use App\Product;
 
 class AdminController extends Controller
 {
@@ -86,7 +87,13 @@ class AdminController extends Controller
             return redirect('admin/order/new')->with(['notif' => "Status Transaksi Sukses Diupdate"]);
         }elseif($request->status=='canceled'){
             return redirect('admin/order/cancel')->with(['notif' => "Status Transaksi Sukses Diupdate"]);
-        }else{
+        }elseif($request->status=='delivered'){
+            $transaction_detail = DB::table('transaction_details')->where('transaction_details.transaction_id', '=', $id)->get();
+            foreach ($transaction_detail as $item) {
+                $product = Product::find($item->product_id);
+                $product->stock = $product->stock - $item->qty;
+                $product->save();
+            }
             return redirect('admin/order/process')->with(['notif' => "Status Transaksi Sukses Diupdate"]);
         }
     }

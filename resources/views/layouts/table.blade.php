@@ -91,7 +91,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
               <p class="mb-0 font-weight-normal float-left dropdown-header">Cek Pesanan</p>
-              <a class="dropdown-item" href="new">
+              <a class="dropdown-item" href="admin/order/new">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-success">
                     <i class="mdi mdi-new-box mx-0"></i>
@@ -101,7 +101,7 @@
                   <h6 class="font-weight-normal">Pesanan Baru</h6>
                 </div>
               </a>
-              <a class="dropdown-item" href="process">
+              <a class="dropdown-item" href="admin/order/process">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-warning">
                     <i class="mdi mdi-truck mx-0"></i>
@@ -111,7 +111,7 @@
                   <h6 class="font-weight-normal">Pesanan Diproses</h6>
                 </div>
               </a>
-              <a class="dropdown-item" href="success">
+              <a class="dropdown-item" href="admin/order/success">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-info">
                     <i class="mdi mdi-checkbox-marked-circle-outline mx-0"></i>
@@ -121,7 +121,7 @@
                   <h6 class="font-weight-normal">Pesanan Sampai</h6>
                 </div>
               </a>
-              <a class="dropdown-item" href="cancel">
+              <a class="dropdown-item" href="admin/order/cancel">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-danger">
                     <i class="mdi mdi-block-helper mx-0"></i>

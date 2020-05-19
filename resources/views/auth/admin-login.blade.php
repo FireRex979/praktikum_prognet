@@ -1,74 +1,61 @@
-@extends('layouts.app')
-
+@extends('layouts.admin')
+@section('judul','Admin | Login Page')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Admin Login') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('admin.login.submit') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="username" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="username" type="string" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-
-                                @error('username')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+<div style="margin-top:150px ">
+    <div class="container">
+        <div class="row align-items-centre">
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-6">
+                <div class="component">
+                    <div class="card">
+                        <form action="{{ route('admin.login.submit') }}" method="post">
+                            @csrf
+                        <div class="card-header">
+                            <center>
+                                <span>ADMIN LOGIN</span>
+                            </center>
                         </div>
-                        
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                        <br>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fas fa-user"></i></span>
                             </div>
+                                <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="username">
                         </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
+                            @error('username')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        <br>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
                             </div>
+                                <input type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" name="password">
                         </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
+                        <br>
+                    </div>
+                        <div class="card-footer">
+                            <button class="btn btn-md btn-outline-primary" type="submit">LOGIN</button>
                         </div>
-                    </form>
+                            @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </form>
+                        @if (session('alert'))
+                    <div class="d-flex justify-content-center mt-2 d-inline alert alert-danger">
+                        {{ session('alert') }}
+                    </div>
+                @endif
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
 @endsection

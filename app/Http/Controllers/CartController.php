@@ -152,7 +152,7 @@ class CartController extends Controller
             return redirect('transactions/'.$id);
         
     }
-    public function cancel_ceheckout($id){
+    public function cancel_checkout($id){
         $id_cart = DB::table('carts')->select('carts.*')->where('carts.deleted_at', '=', null)
                     ->where('carts.status', '=', 'checkedout')
                     ->where('user_id', '=', $id)->get();
