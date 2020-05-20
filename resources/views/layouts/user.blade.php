@@ -47,7 +47,20 @@
                         <ul>
                             <li><a href="{{route('transactions.show', Auth::user()->id)}}">Check Out</a></li>
                             <li><a href="/users/{{Auth::user()->id}}/invoice">Invoice</a></li>
-                            <li><a href="blog.html">Pesan</a></li>
+                            @if(Auth::check())
+                                <?php 
+                                    $id = Auth::user()->id;
+                                    $notif_count = Auth()->user()->unreadNotifications->count();
+                                    $notifications = DB::table('user_notifications')->where('notifiable_id',$id)->where('read_at',NULL)->orderBy('created_at','desc')->get();
+                                ?>
+                            <li><a href="#">Pesan @if($notif_count != 0)<span class="badge" style="background-color: red;">{{$notif_count}}</span>@endif</a>
+                                <ul class="dropdown">
+                                    @foreach($notifications as $notif)
+                                        <li><a href="#">{!!$notif->data!!}</a></li>                                    
+                                    @endforeach
+                                </ul>
+                            </li>
+                            @endif
                         </ul>
                     </div>
                     <!-- Nav End -->

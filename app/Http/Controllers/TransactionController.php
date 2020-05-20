@@ -15,6 +15,7 @@ use App\DetailTransaction;
 use Kavist\RajaOngkir\Facades\RajaOngkir;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use App\Admin;
 
 class TransactionController extends Controller
 {
@@ -64,7 +65,8 @@ class TransactionController extends Controller
         $transaction->proof_of_payment = "belum dibayar";
         $transaction->status = "unverified";
         $transaction->save();
-
+        $admin = Admin::find(8);
+        $admin->notify(new AdminNotification("<a href=''>Ada Transaksi Baru</a>"));
         $id_cart = DB::table('carts')->select('carts.*')->where('carts.deleted_at', '=', null)
                     ->where('carts.status', '=', 'checkedout')
                     ->where('user_id', '=', Auth::user()->id)->get();

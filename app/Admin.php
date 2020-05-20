@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\AdminNotification;
 
 class Admin extends Authenticatable 
 {
@@ -34,4 +35,8 @@ class Admin extends Authenticatable
      *
      * @var array
      */
+
+    public function notifications(){
+        return $this->morphMany(AdminNotification::class, 'notifiable')->orderBy('created_at', 'desc');
+    }
 }

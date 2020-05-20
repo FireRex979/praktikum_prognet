@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Response;
 use Illuminate\Http\Request;
-
+use App\User;
+use App\Product;
+use App\Notifications\UserNotification;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 class ResponseController extends Controller
 {
     /**
@@ -40,6 +44,10 @@ class ResponseController extends Controller
         $response->admin_id = $request->admin_id;
         $response->content = $request->content;
         $response->save();
+
+        $review = DB::table('product_reviews')->select('product_reviews.*')->where('product_reviews.id', '=', $request->review_id)->first();
+        $user = User::find($review->user_id);
+        $user->notify(new UserNotification("<a href = ''>Review telah direspon oleh admin</a>"));
         return redirect()->back()->with(['terkirim'=>'Balasan Terkirim']);
     }
 

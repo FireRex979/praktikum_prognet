@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Transaction;
 use App\Product;
+use App\User;
+use App\Notifications\UserNotification;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -83,6 +86,8 @@ class AdminController extends Controller
         $transaction = Transaction::find($id);
         $transaction->status = $request->status;
         $transaction->save();
+        $user = User::find($transaction->user_id);
+        $user->notify(new UserNotification("<a href = ''>Status Transaksimu telah diupdate</a>"));
         if ($request->status=='unverified') {
             return redirect('admin/order/new')->with(['notif' => "Status Transaksi Sukses Diupdate"]);
         }elseif($request->status=='canceled'){

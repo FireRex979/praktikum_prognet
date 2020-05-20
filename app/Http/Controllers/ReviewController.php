@@ -6,8 +6,9 @@ use App\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Auth;
+use App\Admin;
 use App\Product;
-
+use App\Notifications\AdminNotification;
 class ReviewController extends Controller
 {
     /**
@@ -45,6 +46,8 @@ class ReviewController extends Controller
         $review->rate = $request->rate;
         $review->content = $request->content;
         $review->save();
+        $admin = Admin::find(8);
+        $admin->notify(new AdminNotification("<a href=''>Ada Review Baru</a>"));
         $rating = DB::table('product_reviews')->where('product_reviews.product_id', '=', $request->product_id)->avg('product_reviews.rate');
         $product = Product::find($request->product_id);
         $product->product_rate = $rating;
