@@ -56,7 +56,7 @@
                             <li><a href="#">Pesan @if($notif_count != 0)<span class="badge" style="background-color: red;">{{$notif_count}}</span>@endif</a>
                                 <ul class="dropdown">
                                     @foreach($notifications as $notif)
-                                        <li><a href="#">{!!$notif->data!!}</a></li>                                    
+                                        <li><{!!$notif->data!!}</li>                                    
                                     @endforeach
                                 </ul>
                             </li>
