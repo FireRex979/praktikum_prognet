@@ -52,11 +52,13 @@
                                     $id = Auth::user()->id;
                                     $notif_count = Auth()->user()->unreadNotifications->count();
                                     $notifications = DB::table('user_notifications')->where('notifiable_id',$id)->where('read_at',NULL)->orderBy('created_at','desc')->get();
-                                ?>
+                            ?>
                             <li><a href="#">Pesan @if($notif_count != 0)<span class="badge" style="background-color: red;">{{$notif_count}}</span>@endif</a>
-                                <ul class="dropdown">
+                                <ul class="dropdown" style="width: 300px;">
+                                    <center><a href="/marknotif" class="btn" style="background-color: white;">Baca Semua</a></center>
                                     @foreach($notifications as $notif)
-                                        <li><{!!$notif->data!!}</li>                                    
+                                        <li>{!!$notif->data!!}</li>
+                                        <br>                                  
                                     @endforeach
                                 </ul>
                             </li>

@@ -16,7 +16,7 @@ use Kavist\RajaOngkir\Facades\RajaOngkir;
 use Illuminate\Support\Facades\DB;
 use Auth;
 use App\Admin;
-
+use App\Notifications\AdminNotification;
 class TransactionController extends Controller
 {
     /**
@@ -53,7 +53,6 @@ class TransactionController extends Controller
         $provinsi = Province::where('provinces.province_id', $request->province_destination)->first();
         $transaction = new Transaction;
         $transaction->regency = $kabupaten->title;
-        $transaction->date_order = date('Y-m-d');
         $transaction->timeout = date('Y-m-d H:i:s', $t);
         $transaction->address = $request->address;
         $transaction->province = $provinsi->title;
@@ -66,7 +65,14 @@ class TransactionController extends Controller
         $transaction->status = "unverified";
         $transaction->save();
         $admin = Admin::find(8);
-        $admin->notify(new AdminNotification("<a href=''>Ada Transaksi Baru</a>"));
+        $notif = "<a class='dropdown-item' href='/admin/order/cek/".$transaction->id."'>".
+                "<div class='item-content flex-grow'>".
+                  "<h6 class='ellipsis font-weight-normal'>".Auth::user()->name."</h6>".
+                  "<p class='font-weight-light small-text text-muted mb-0'>Ada Transaksi Baru".
+                  "</p>".
+                "</div>".
+              "</a>";
+        $admin->notify(new AdminNotification($notif));
         $id_cart = DB::table('carts')->select('carts.*')->where('carts.deleted_at', '=', null)
                     ->where('carts.status', '=', 'checkedout')
                     ->where('user_id', '=', Auth::user()->id)->get();
@@ -101,7 +107,18 @@ class TransactionController extends Controller
             'weight' => $request->weight,
             'courier' => $request->courier
         ])->get();
-        $msg = $cost[0]['costs'][0]['cost'][0]['value'];
+        $msg = $cost[0]['costs'][$request->paket]['cost'][0]['value'];
+        return response()->json(['ongkir'=>$msg]);
+    }
+
+    public function getService(Request $request){
+        $cost = RajaOngkir::ongkosKirim([
+            'origin'    => 94,
+            'destination' => $request->city_id,
+            'weight' => $request->weight,
+            'courier' => $request->courier
+        ])->get();
+        $msg = $cost[0]['costs'];
         return response()->json(['ongkir'=>$msg]);
     }
 

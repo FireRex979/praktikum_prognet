@@ -7,9 +7,11 @@ use Illuminate\Support\Facades\DB;
 use App\Transaction;
 use App\Product;
 use App\User;
+use App\Admin;
 use App\Notifications\UserNotification;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Carbon;
+use App\Charts\AdminChart;
 class AdminController extends Controller
 {
     /**
@@ -29,7 +31,14 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        $tahun = CARBON::NOW()->format('Y');
+        $result = DB::table('transactions')
+                    ->select(DB::raw('COALESCE(SUM(total),0) AS pendapatan'), DB::raw('MONTH(created_at) AS bulan'))
+                    ->where(DB::raw('YEAR(created_at)'),'=', $tahun)
+                    ->where('status','=','success')
+                    ->groupBy(DB::raw('MONTH(created_at)'))
+                    ->get();
+        return view('admin.home', compact('tahun', 'result'));
     }
 
     public function orderNew(){
@@ -38,7 +47,7 @@ class AdminController extends Controller
             ->join('users', 'users.id', '=', 'transactions.user_id')
             ->select('transactions.*', 'users.name')
             ->where('transactions.status', '=', 'unverified')
-            ->orderby('transactions.date_order', 'desc')->paginate(10);
+            ->orderby('transactions.created_at', 'desc')->paginate(10);
         return view('admin.cek_order', compact('transactions', 'status'));
     }
 
@@ -49,7 +58,7 @@ class AdminController extends Controller
             ->select('transactions.*', 'users.name')
             ->where('transactions.status', '=', 'verified')
             ->orWhere('transactions.status', '=', 'delivered')
-            ->orderby('transactions.date_order', 'desc')->paginate(10);
+            ->orderby('transactions.created_at', 'desc')->paginate(10);
         return view('admin.cek_order', compact('transactions', 'status'));
     }
 
@@ -59,7 +68,7 @@ class AdminController extends Controller
             ->join('users', 'users.id', '=', 'transactions.user_id')
             ->select('transactions.*', 'users.name')
             ->where('transactions.status', '=', 'success')
-            ->orderby('transactions.date_order', 'desc')->paginate(10);
+            ->orderby('transactions.created_at', 'desc')->paginate(10);
         return view('admin.cek_order', compact('transactions', 'status'));
     }
 
@@ -70,7 +79,7 @@ class AdminController extends Controller
             ->select('transactions.*', 'users.name')
             ->where('transactions.status', '=', 'canceled')
             ->orWhere('transactions.status', '=', 'expired')
-            ->orderby('transactions.date_order', 'desc')->paginate(10);
+            ->orderby('transactions.created_at', 'desc')->paginate(10);
         return view('admin.cek_order', compact('transactions', 'status'));
     }
 
@@ -87,7 +96,7 @@ class AdminController extends Controller
         $transaction->status = $request->status;
         $transaction->save();
         $user = User::find($transaction->user_id);
-        $user->notify(new UserNotification("<a href = ''>Status Transaksimu telah diupdate</a>"));
+        $user->notify(new UserNotification("<a href ='/users/invoice/".$transaction->id."'>Status Transaksimu dengan id ".$transaction->id." telah diupdate</a>"));
         if ($request->status=='unverified') {
             return redirect('admin/order/new')->with(['notif' => "Status Transaksi Sukses Diupdate"]);
         }elseif($request->status=='canceled'){
@@ -100,6 +109,26 @@ class AdminController extends Controller
                 $product->save();
             }
             return redirect('admin/order/process')->with(['notif' => "Status Transaksi Sukses Diupdate"]);
+        }elseif($request->status == 'verified'){
+            return redirect('admin/order/process')->with(['notif' => "Status Transaksi Sukses Diupdate"]);
         }
     }
+
+    public function markReadAdmin(){
+        $admin = Admin::find(8);
+        $admin->unreadNotifications()->update(['read_at' => now()]);
+        return redirect()->back();
+    }
+
+    public function chart(){
+        $tahun = CARBON::NOW()->format('Y');
+        $result = DB::table('transactions')
+                    ->select(DB::raw('COALESCE(SUM(total),0) as pendapatan'), DB::raw('MONTH(created_at) as bulan'))
+                    ->where(DB::raw('YEAR(created_at)'),'=', $tahun)
+                    ->where('status','=','success')
+                    ->groupBy(DB::raw('MONTH(created_at)'))
+                    ->get();
+        return response()->json($result);
+    }
+
 }

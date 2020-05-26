@@ -30,53 +30,28 @@
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item dropdown mr-1">
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-              <i class="mdi mdi-message-text mx-0"></i>
-              <span class="count"></span>
+              @if(Auth::check())
+                <?php 
+                  $id = 8;
+                  $admin = App\Admin::find(8);
+                  $notif_count = $admin->unreadNotifications->count();
+                  $notifications = DB::table('admin_notifications')->where('notifiable_id',$id)->where('read_at',NULL)->orderBy('created_at','desc')->get();
+                ?>
+              <i class="mdi mdi-bell mx-0"></i>
+              @if($notif_count != 0)<span class="count">{{$notif_count}}</span>@endif
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="messageDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
-              <a class="dropdown-item">
-                <div class="item-thumbnail">
-                    <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="item-content flex-grow">
-                  <h6 class="ellipsis font-weight-normal">John Doe
-                  </h6>
-                  <p class="font-weight-light small-text text-muted mb-0">
-                    The meeting is cancelled
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item">
-                <div class="item-thumbnail">
-                    <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="item-content flex-grow">
-                  <h6 class="ellipsis font-weight-normal">John Doe
-                  </h6>
-                  <p class="font-weight-light small-text text-muted mb-0">
-                    New product launch
-                  </p>
-                </div>
-              </a>
-              <a class="dropdown-item">
-                <div class="item-thumbnail">
-                    <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
-                </div>
-                <div class="item-content flex-grow">
-                  <h6 class="ellipsis font-weight-normal"> John Doe
-                  </h6>
-                  <p class="font-weight-light small-text text-muted mb-0">
-                    Upcoming board meeting
-                  </p>
-                </div>
-              </a>
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifikasi</p>
+              @foreach($notifications as $notif)
+                {!!$notif->data!!}
+              @endforeach
+              <a href="/admin/marknotifadmin" class="btn btn-block" style="background-color: #ffd8ca; color: green;">Baca Semua</a>
             </div>
+            @endif
           </li>
           <li class="nav-item dropdown mr-4">
             <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" id="notificationDropdown" href="#" data-toggle="dropdown">
-              <i class="mdi mdi-bell mx-0"></i>
-              <span class="count"></span>
+              <i class="mdi mdi-message-text mx-0"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
               <p class="mb-0 font-weight-normal float-left dropdown-header">Cek Pesanan</p>
@@ -374,26 +349,13 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-7 grid-margin stretch-card">
+            <div class="col-md-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
-                  <p class="card-title">Cash deposits</p>
-                  <p class="mb-4">To start a blog, think of a topic about and first brainstorm party is ways to write details</p>
+                  <p class="card-title">Grafik Pendapatan per Bulan dalam tahun {{$tahun}}</p>
                   <div id="cash-deposits-chart-legend" class="d-flex justify-content-center pt-3"></div>
-                  <canvas id="cash-deposits-chart"></canvas>
+                  <div id="chartContainer" style="height: 400px; width: 100%;"></div>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-5 grid-margin stretch-card">
-              <div class="card">
-                <div class="card-body">
-                  <p class="card-title">Total sales</p>
-                  <h1>$ 28835</h1>
-                  <h4>Gross sales over the years</h4>
-                  <p class="text-muted">Today, many people rely on computers to do homework, work, and create or store useful information. Therefore, it is important </p>
-                  <div id="total-sales-chart-legend"></div>                  
-                </div>
-                <canvas id="total-sales-chart"></canvas>
               </div>
             </div>
           </div>
@@ -501,4 +463,71 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+  @foreach($result as $item)
+    @for($i=0; $i<12; $i++)
+      @if($i==$item->bulan)
+        <input type="hidden" name="{{$i}}" value="{{$item->pendapatan}}">
+        @break
+      @else
+        <input type="hidden" name="{{$i}}" value="0">
+      @endif
+    @endfor
+  @endforeach
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+   <script>
+    window.onload = function () {
+      var cash1 = parseInt($("input[name=1]").val());
+      var cash2 = parseInt($("input[name=2]").val());
+      var cash3 = parseInt($("input[name=3]").val());
+      var cash4 = parseInt($("input[name=4]").val());
+      var cash5 = parseInt($("input[name=5]").val());
+      var cash6 = parseInt($("input[name=6]").val());
+      var cash7 = parseInt($("input[name=7]").val());
+      var cash8 = parseInt($("input[name=8]").val());
+      var cash9 = parseInt($("input[name=9]").val());
+      var cash10 = parseInt($("input[name=10]").val());
+      var cash11 = parseInt($("input[name=11]").val());
+      var cash12 = parseInt($("input[name=12]").val());
+      var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2", // "light1", "light2", "dark1", "dark2"
+        title:{
+          text: "Pendapatan per Bulan dalam Tahun {{$tahun}}"
+        },
+        axisX: {
+          interval:1,
+          labelMaxWidth: 180,
+          labelAngle: -45,
+          labelFontFamily: "verdana0"
+        },
+        axisY: {
+          title: "Total Pendapatan dalam Rupiah"
+        },
+        data: [{        
+          type: "line",  
+          showInLegend: true, 
+          legendMarkerColor: "grey",
+          legendText: "Total Pendapatan dalam Rupiah",
+          dataPoints: [     
+            { y: cash1, label: "Januari" },
+            { y: cash2,  label: "Februari" },
+            { y: cash3,  label: "Maret" },
+            { y: cash4,  label: "April" },
+            { y: cash5,  label: "Mei" },
+            { y: cash6, label: "Juni" },
+            { y: cash7,  label: "Juli" },
+            { y: cash8,  label: "Agustus" },
+            { y: cash9,  label: "September" },
+            { y: cash10,  label: "Oktober" },
+            { y: cash11,  label: "November" },
+            { y: cash12,  label: "Desember" }
+          ]
+        }]
+      });
+      chart.render();
+
+      }
+    </script>
 @endsection

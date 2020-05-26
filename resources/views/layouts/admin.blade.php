@@ -14,7 +14,9 @@
     <!-- inject:css -->
     <link rel="stylesheet" href="{{ asset('assets/admin/css/style.css') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+   
 </head>
 <body class="index">
 	@yield('content')
@@ -38,5 +40,6 @@
   <script src="{{ asset('assets/admin/js/jquery.dataTables.js') }}"></script>
   <script src="{{ asset('assets/admin/js/dataTables.bootstrap4.js') }}"></script>
   <!-- End custom js for this page-->
+
 </body>
 </html>

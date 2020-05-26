@@ -18,9 +18,9 @@ Route::get('/', function () {
 });
 
 Auth::routes(['verify' => true, 'guest']);
-
+Route::get('/chart','AdminController@chart');
 Route::get('/home', 'UserController@index')->middleware(['auth','verified'])->name('home');
-
+Route::post('/marknotifAdmin', 'AdminController@marknotif');
 //Route Admin
 Route::prefix('admin')->group(function(){
     Route::get('/login', 'Auth\AdminLoginController@showLoginform')->middleware('guest')->name('admin.login');
@@ -32,7 +32,9 @@ Route::prefix('admin')->group(function(){
     Route::get('/order/success', 'AdminController@orderSuccess');
     Route::get('/order/cek/{id}', 'AdminController@orderDetail');
     Route::get('/order/cancel', 'AdminController@orderCancel');
+    Route::get('/marknotifadmin', 'AdminController@markReadAdmin');
 });
+
 Route::patch('/order/update/{id}', 'AdminController@orderUpdate');
 
 Route::group(['middleware'=>['authAdmin:admin']],function(){
@@ -100,5 +102,7 @@ Route::patch('/transaction/success/{id}', 'UserController@confirmation');
 Route::resource('reviews', 'ReviewController');
 Route::patch('/transactions/cancel/{id}', 'UserController@cancel_transaction');
 Route::post('/users/checkout/{id}', 'TransactionController@checkout_no_cart');
+Route::get('/marknotif', 'UserController@marknotif');
+Route::get('/destination/service', 'TransactionController@getService');
 });
 

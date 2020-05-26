@@ -1,4 +1,4 @@
-@extends('layouts.table')
+@extends('layouts.detail_transaksi')
 @section('judul','Admin | Cek Order Page')
 @section('content')
     <div class="col-lg-10 grid-margin stretch-card">
@@ -42,7 +42,7 @@
                         @foreach($transactions as $transaction)
                         <tr>
                           <td>{{ $loop->iteration }}</td>
-                          <td>{{ $transaction->date_order }}</td>
+                          <td>{{ $transaction->created_at }}</td>
                           <td>{{ $transaction->name }}</td>
                           <td>{{ $transaction->address }}</td>
                           <td>Rp. {{ $transaction->total }}</td>

@@ -47,7 +47,14 @@ class ReviewController extends Controller
         $review->content = $request->content;
         $review->save();
         $admin = Admin::find(8);
-        $admin->notify(new AdminNotification("<a href=''>Ada Review Baru</a>"));
+        $notif = "<a class='dropdown-item' href='/products/".$request->product_id."'>".
+                "<div class='item-content flex-grow'>".
+                  "<h6 class='ellipsis font-weight-normal'>".Auth::user()->name."</h6>".
+                  "<p class='font-weight-light small-text text-muted mb-0'>Ada Review Baru".
+                  "</p>".
+                "</div>".
+              "</a>";
+        $admin->notify(new AdminNotification($notif));
         $rating = DB::table('product_reviews')->where('product_reviews.product_id', '=', $request->product_id)->avg('product_reviews.rate');
         $product = Product::find($request->product_id);
         $product->product_rate = $rating;

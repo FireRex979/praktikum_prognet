@@ -59,6 +59,12 @@
                                     </select>
                                 </div>
                                 <div class="col-12 mb-3">
+                                    <label for="country">Paket <span>*</span></label>
+                                    <select class="w-100 form-control" name="paket">
+                                        <option>--Pilih Paket--</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 mb-3">
                                     <label id="btn-calculate" class="btn btn-md btn-info">Kalkulasi Ongkir</label>
                                 </div>
                                 <?php $weight = 0; ?>
@@ -210,13 +216,17 @@
                     $('select[name="city_destination"]').empty();
                 }
             });
-          /*  $('#btn-calculate').on('click', function(){
-                var city_id = $('select[name="city_destination"]').val();
-                var weight = $('input[name="weight"]').val();
-                var courier = $('select[name="courier"]').val();
-                $('input[name="ongkir"]').val(weight);
-            });*/
         });
+        /*$(document).ready(function(){
+            $('select[name=courier]').on('change', function(){
+                let courier = $(this).val();
+                if (courier == 'jne') {
+                    $('select[name=paket]').append('<option value="0">OKE</option>');
+                    $('select[name=paket]').append('<option value="1">REG</option>');
+                    $('select[name=paket]').append('<option value="2">YES</option>');
+                }
+            });
+        });*/
     </script>
      <script type="text/javascript">
     $.ajaxSetup({
@@ -231,6 +241,7 @@
 
         var city_id = $("select[name=city_destination]").val();
         var courier = $("select[name=courier]").val();
+        var paket = $("select[name=paket]").val();
         var weight = $("input[name=weight]").val();
         var url = '/destination/cost';
         var total = {{$total}};
@@ -241,7 +252,8 @@
            data:{
                   city_id:city_id, 
                   weight:weight,
-                  courier:courier
+                  courier:courier,
+                  paket:paket
                 },
            success:function(response){
               $('input[name="ongkir"]').val(response.ongkir);
@@ -249,6 +261,35 @@
               var total_ = response.ongkir + total;
               $('#total').html(total_);
            },
+        });
+    });
+     $("select[name=courier]").change(function(e){
+
+        e.preventDefault();
+
+        var city_id = $("select[name=city_destination]").val();
+        var courier = $("select[name=courier]").val();
+        var paket = $("select[name=paket]").val();
+        var weight = $("input[name=weight]").val();
+        var url = '/destination/service';
+        $.ajax({
+           url:url,
+           type:'GET',
+           dataType: "json",
+           data:{
+                  city_id:city_id, 
+                  weight:weight,
+                  courier:courier,
+                },
+           success:function(response){
+                $('select[name="paket"]').empty();
+                for (var i = 0; i < response.ongkir.length; i++) {
+                    $('select[name=paket').append('<option value="'+ i + '">'+ response.ongkir[i]['service'] + '</option>');
+                }
+           },
+           error:function(){
+                alert("EROR");
+           }
         });
     });
 </script>

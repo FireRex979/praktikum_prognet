@@ -41,24 +41,48 @@
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item dropdown mr-1">
             <a class="nav-link count-indicator dropdown-toggle d-flex justify-content-center align-items-center" id="messageDropdown" href="#" data-toggle="dropdown">
-             @if(Auth::check())
-                <?php 
-                  $id = 8;
-                  $admin = App\Admin::find(8);
-                  $notif_count = $admin->unreadNotifications->count();
-                  $notifications = DB::table('admin_notifications')->where('notifiable_id',$id)->where('read_at',NULL)->orderBy('created_at','desc')->get();
-                ?>
               <i class="mdi mdi-bell mx-0"></i>
-              @if($notif_count != 0)<span class="count">{{$notif_count}}</span>@endif
+              <span class="count"></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="messageDropdown">
-              <p class="mb-0 font-weight-normal float-left dropdown-header">Notifikasi</p>
-              @foreach($notifications as $notif)
-                {!!$notif->data!!}
-              @endforeach
-              <a href="/admin/marknotifadmin" class="btn btn-block" style="background-color: #ffd8ca; color: green;">Baca Semua</a>
+              <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
+              <a class="dropdown-item">
+                <div class="item-thumbnail">
+                    <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="item-content flex-grow">
+                  <h6 class="ellipsis font-weight-normal">John Doe
+                  </h6>
+                  <p class="font-weight-light small-text text-muted mb-0">
+                    The meeting is cancelled
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item">
+                <div class="item-thumbnail">
+                    <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="item-content flex-grow">
+                  <h6 class="ellipsis font-weight-normal">John Doe
+                  </h6>
+                  <p class="font-weight-light small-text text-muted mb-0">
+                    New product launch
+                  </p>
+                </div>
+              </a>
+              <a class="dropdown-item">
+                <div class="item-thumbnail">
+                    <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+                </div>
+                <div class="item-content flex-grow">
+                  <h6 class="ellipsis font-weight-normal"> John Doe
+                  </h6>
+                  <p class="font-weight-light small-text text-muted mb-0">
+                    Upcoming board meeting
+                  </p>
+                </div>
+              </a>
             </div>
-            @endif
           </li>
           <li class="nav-item dropdown mr-4">
             <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center notification-dropdown" id="notificationDropdown" href="#" data-toggle="dropdown">
@@ -66,7 +90,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="notificationDropdown">
               <p class="mb-0 font-weight-normal float-left dropdown-header">Cek Pesanan</p>
-              <a class="dropdown-item" href="admin/order/new">
+              <a class="dropdown-item" href="new">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-success">
                     <i class="mdi mdi-new-box mx-0"></i>
@@ -76,7 +100,7 @@
                   <h6 class="font-weight-normal">Pesanan Baru</h6>
                 </div>
               </a>
-              <a class="dropdown-item" href="admin/order/process">
+              <a class="dropdown-item" href="process">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-warning">
                     <i class="mdi mdi-truck mx-0"></i>
@@ -86,7 +110,7 @@
                   <h6 class="font-weight-normal">Pesanan Diproses</h6>
                 </div>
               </a>
-              <a class="dropdown-item" href="admin/order/success">
+              <a class="dropdown-item" href="success">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-info">
                     <i class="mdi mdi-checkbox-marked-circle-outline mx-0"></i>
@@ -96,7 +120,7 @@
                   <h6 class="font-weight-normal">Pesanan Sampai</h6>
                 </div>
               </a>
-              <a class="dropdown-item" href="admin/order/cancel">
+              <a class="dropdown-item" href="cancel">
                 <div class="item-thumbnail">
                   <div class="item-icon bg-danger">
                     <i class="mdi mdi-block-helper mx-0"></i>

@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tanggal Pemesanan</label>
-                            <input type="date" class="form-control" placeholder="Harga Satuan" value="{{ $transaction->date_order }}" aria-label="Harga Satuan" aria-describedby="basic-addon1" name="date_order" readonly="">
+                            <input type="date" class="form-control" placeholder="Harga Satuan" value="{{ $transaction->created_at }}" aria-label="Harga Satuan" aria-describedby="basic-addon1" name="date_order" readonly="">
                         </div>
                         <div class="form-group">
                             <label>Sub Total</label>

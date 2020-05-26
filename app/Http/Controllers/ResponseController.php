@@ -46,8 +46,9 @@ class ResponseController extends Controller
         $response->save();
 
         $review = DB::table('product_reviews')->select('product_reviews.*')->where('product_reviews.id', '=', $request->review_id)->first();
+        $product = Product::find($review->product_id);
         $user = User::find($review->user_id);
-        $user->notify(new UserNotification("<a href = ''>Review telah direspon oleh admin</a>"));
+        $user->notify(new UserNotification("<a href ='/users/".$review->product_id."'>Reviewmu di produk ".$product->product_name." telah direspon oleh admin</a>"));
         return redirect()->back()->with(['terkirim'=>'Balasan Terkirim']);
     }
 

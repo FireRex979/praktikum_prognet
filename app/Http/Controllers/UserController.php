@@ -11,6 +11,8 @@ use App\Discount;
 use DB;
 use Auth;
 use App\Transaction;
+use App\Admin;
+use App\Notifications\AdminNotification;
 class UserController extends Controller
 {
     public function __construct()
@@ -175,6 +177,15 @@ class UserController extends Controller
         $transaction = Transaction::find($id);
         $transaction->proof_of_payment = $nama_image;
         $transaction->save();
+        $notif = "<a class='dropdown-item' href='/admin/order/cek/".$transaction->id."' id='notif-{{$loop->iteration}}'>".
+                "<div class='item-content flex-grow'>".
+                  "<h6 class='ellipsis font-weight-normal'>".Auth::user()->name."</h6>".
+                  "<p class='font-weight-light small-text text-muted mb-0'>User Mengupload Bukti Pembayaran".
+                  "</p>".
+                "</div>".
+              "</a>";
+        $admin = Admin::find(8);
+        $admin->notify(new AdminNotification($notif));
         return redirect()->back()->with(['notif' => "Bukti Pembayaran telah Diupload"]);
     }
 
@@ -203,5 +214,11 @@ class UserController extends Controller
         $transaction->status = "canceled";
         $transaction->save();
         return redirect()->back()->with(['notif' => "Transaksi telah dibatalkan"]);
+    }
+
+    public function marknotif(){
+        $user = User::find(Auth::user()->id);
+        $user->unreadNotifications()->update(['read_at' => now()]);
+        return redirect()->back();
     }
 }
